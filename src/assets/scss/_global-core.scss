@@ -1,0 +1,471 @@
+$main-color: #2a72b3;
+
+// extenable class
+.display-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.hidden {
+  display: none;
+}
+// end extendable class
+
+.powered-wrapper {
+  .powered-text {
+    margin-right: 10px;
+  }
+
+  .logo-cms {
+    width: 65px;
+  }
+}
+
+body {
+  font-size: 12px;
+}
+
+.footer {
+  font-size: 12px;
+  padding: 10px 1rem;
+
+  .footer-inline {
+    @extend .display-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.navbar {
+  &.default-layout {
+    box-shadow: 3px 5px 10px #dddddd;
+
+    .navbar-brand-wrapper {
+      border-right: 1px solid #dddddd;
+
+      .brand-logo-mini img {
+        width: auto;
+        height: 25px;
+      }
+    }
+
+    .navbar-menu-wrapper {
+      background: white;
+
+      .dropdown-item {
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .navbar-toggler {
+        color: black;
+      }
+
+      .navbar-nav .nav-item {
+
+        &.dropdown .navbar-dropdown {
+          padding: 10px 0px;
+        }
+
+        .nav-link {
+          color: black;
+
+          .profile-text {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.sidebar {
+  padding: 15px 0px;
+  border-right: 1px solid #dddddd;
+
+  .nav .nav-item .nav-link {
+    padding: 10px 15px;
+    height: 45px;
+  }
+}
+
+.sidebar-icon-only .sidebar .nav .nav-item.hover-open {
+
+  .collapse {
+    border-right: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    padding: 0px;
+    top: 40px;
+  }
+
+  .nav-link .menu-title {
+    border: 1px solid #dddddd;
+    border-left: none;
+    height: 40px;
+  }
+}
+
+
+
+
+.card {
+  .card-body {
+    padding: 20px;
+  }
+}
+
+.card-title {
+  font-weight: 600;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+// custom button
+.btn-form-wrapper {
+  padding: 30px 0px;
+}
+
+.btn {
+  font-size: 12px;
+}
+// end custom button
+
+// custom table
+.table {
+
+  thead {
+    th {
+      height: 20px;
+      padding: 10px;
+    }
+  }
+
+  td {
+    height: 20px;
+    padding: 10px;
+  }
+}
+
+.dataTables_wrapper {
+
+  .dataTables_length select {
+    height: 30px;
+  }
+
+  label, .dataTables_info {
+    font-size: 12px;
+  }
+
+  .dataTable {
+
+    tbody td, thead th {
+      height: 30px;
+      padding: 0px 15px;
+      font-size: 12px;
+    }
+  }
+}
+// end custom table
+
+
+// custom pagination
+.pagination .page-item .page-link {
+  font-size: 12px;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+// end custom pagination
+
+// custom form
+.auth.theme-two .auto-form-wrapper form .form-group .input-group {
+  height: 30px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+
+  label {
+    font-size: 12px;
+    margin-bottom: 0px;
+
+    &.valid {
+      display: none !important;
+    }
+  }
+
+  .label-help {
+    font-size: 12px;
+    font-style: italic;
+  }
+}
+
+.form-control {
+  border-color: #dddddd;
+  height: 30px;
+  padding: 5px !important;
+
+  &.control-half {
+    width: 50%;
+  }
+}
+
+.input-group > .input-group-append > .input-group-text {
+  border-color: #dddddd;
+  height: 30px;
+}
+// end custom form
+
+
+// select custom
+.select-wrapper {
+  .select2-container {
+    display: block;
+
+    .select2-search--inline {
+      height: 20px;
+      line-height: 16px;
+      font-size: 12px;
+    }
+
+    .select2-selection {
+      border: 1px solid #dddddd;
+      height: 30px;
+      padding: 5px !important;
+
+      .select2-selection__rendered {
+        height: 20px;
+        padding-left: 0px;
+        line-height: 18px;
+        overflow: unset;
+      }
+
+      .select2-selection__rendered {
+
+        .select2-selection__choice {
+          padding: 5px;
+          font-size: 10px;
+          margin-top: 0px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}
+
+.select2-container {
+  .select2-dropdown {
+
+    .select2-results__option {
+      padding: 5px;
+      height: 30px;
+      font-size: 12px;
+      transition: all 0.5s ease;
+    }
+
+    .select2-results__option--highlighted[aria-selected] {
+      background: $main-color;
+    }
+  }
+}
+// end select custom
+
+
+// datepicker
+.datepicker {
+
+  table {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  &.datepicker-dropdown, &.datepicker-inline {
+    padding: 0px 10px;
+    width: 200px;
+    font-size: 12px;
+    box-shadow: 0px 0px 10px #dddddd;
+
+    &.datepicker-orient-bottom, &.datepicker-orient-top {
+      &:before, &:after {
+        display: none;
+      }
+    }
+
+    .datepicker-days {
+      padding: 0px;
+
+      table {
+        font-size: 12px;
+
+        &.table-condensed {
+          width: 100%;
+
+          thead tr th {
+
+            &.datepicker-switch, &.dow {
+              font-size: 12px;
+            }
+
+            &.dow {
+              &:first-child, &:last-child {
+                text-align: center;
+              }
+            }
+          }
+
+          tbody td.day {
+            font-size: 12px;
+
+            &:first-child, &:last-child {
+              text-align: center;
+            }
+
+            &.active:before, &.today:before {
+              width: 30px;
+              height: 30px;
+            }
+
+            &.today:before {
+              background: $main-color;
+            }
+
+          }
+        }
+      }
+    }
+  }
+
+  &.input-group {
+    width: 50%;
+
+    .form-control {
+      border: 1px solid #dddddd;
+      border-right: none;
+    }
+  }
+}
+// end datepicker
+
+// range
+.range-wrapper {
+  @extend .display-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 50%;
+
+  .date {
+
+    &.input-group {
+      width: 50%;
+    }
+  }
+
+  .range-separator {
+    padding: 10px;
+  }
+}
+// end range
+
+
+// timepicker
+.timepicker {
+
+  &.input-group {
+    width: 50%;
+  }
+}
+// end timepicker
+
+
+// colorpicker
+.asColorPicker-wrap {
+  width: 50%;
+
+  .asColorPicker-trigger {
+    padding: 10px 27px;
+    border-color: #dddddd;
+  }
+}
+// end colorpicker
+
+
+// text editor
+.text-editor-wrapper {
+  margin-bottom: 15px;
+}
+// end text editor
+
+
+// image uploader
+.image-multiple-wrapper {
+
+}
+
+.image-section {
+  @extend .display-flex;
+  align-items: center;
+}
+
+.image-selector-wrapper {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  position: relative;
+  height: 150px;
+
+  .btn-upload-file {
+    display: none;
+  }
+
+  .btn-upload {
+    cursor: pointer;
+    width: 200px;
+    height: 150px;
+    background: transparent;
+    border: 1px solid #dddddd;
+
+    .image {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      height: auto;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .upload-section {
+      font-size: 14px;
+      color: #909090;
+    }
+  }
+
+  &:hover {
+    .image-delete-icon {
+      opacity: 1;
+      top: -10px;
+    }
+  }
+
+  .image-delete-icon {
+    cursor: pointer;
+    position: absolute;
+    top: -15px;
+    right: -10px;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff4e4e;
+    color: white;
+    border-radius: 100%;
+    opacity: 0;
+    transition: all 0.5s ease;
+  }
+
+}
+
+// end image uploader

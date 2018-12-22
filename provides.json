@@ -1,0 +1,11 @@
+{
+  "providers": [
+    "Vodea\\VodeaCore\\VodeaCoreProvider"
+  ],
+  "aliases": [
+    {
+      "alias": "Image",
+      "facade": "WVI\\CMSCore\\Facades\\CMSCore"
+    }
+  ]
+}

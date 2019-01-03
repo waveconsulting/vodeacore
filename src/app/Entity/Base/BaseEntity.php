@@ -2,7 +2,7 @@
 
 namespace App\Entity\Base;
 
-use App\Service\CRUDService;
+use App\Service\VodeaCore\CRUDService;
 use App\CMSTrait\CodingCaseTrait;
 use App\CMSTrait\CRUDTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;

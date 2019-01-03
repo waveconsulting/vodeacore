@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\VodeaCore\Admin;
 
 use App\Entity\User\Admin;
-use App\Http\Controllers\Controller;
-use App\Util\Constant;
+use App\Http\Controllers\VodeaCore\Controller;
+use App\Util\VodeaCore\Constant;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 

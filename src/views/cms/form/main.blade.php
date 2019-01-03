@@ -12,7 +12,7 @@
         <h4 class="card-title">{!! @$title !!}</h4>
 
         @if($model::USE_META_SET)
-            @include('admin.cms.form.meta')
+            @include('cms::form.meta')
         @endif
 
         @foreach( $listType as $key=>$value)
@@ -38,10 +38,10 @@
                 if (!isset($listIndex)) $listIndex = '';
             @endphp
 
-            @include('admin.cms.form.group')
+            @include('cms::form.group')
         @endforeach
 
-        @include('admin.cms.form.button')
+        @include('cms::form.button')
 
     </div>
 </div>

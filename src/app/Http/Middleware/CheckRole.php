@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\VodeaCore;
 
 use Closure;
 use Illuminate\Support\Facades\Redirect;

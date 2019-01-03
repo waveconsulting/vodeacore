@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="{!! url('/') !!}/favicon.ico"/>
 
-    @include('admin.cms.layouts.part.css')
+    @include('cms::layouts.part.css')
 
     @yield('cssCustom')
 
@@ -24,7 +24,7 @@
     @yield('headerCustom')
 
     <!-- partial:navbar -->
-    @include('admin.cms.layouts.part.navbar')
+    @include('cms::layouts.part.navbar')
     <!-- partial -->
 
     <div class="container-fluid page-body-wrapper">
@@ -133,7 +133,7 @@
         <!-- partial -->
 
         <!-- partial:sidebar -->
-        @include('admin.cms.layouts.part.sidebar')
+        @include('cms::layouts.part.sidebar')
         <!-- partial -->
 
         <div class="main-panel">
@@ -144,7 +144,7 @@
             <!-- content-wrapper ends -->
 
             <!-- partial:footer -->
-            @include('admin.cms.layouts.part.footer')
+            @include('cms::layouts.part.footer')
             <!-- partial -->
         </div>
         <!-- main-panel ends -->
@@ -152,10 +152,10 @@
     <!-- page-body-wrapper ends -->
 </div>
 
-@include('admin.cms.layouts.part.modal')
+@include('cms::layouts.part.modal')
 @yield('modalCustom')
 
-@include('admin.cms.layouts.part.js')
+@include('cms::layouts.part.js')
 @yield('jsCustom')
 
 </body>

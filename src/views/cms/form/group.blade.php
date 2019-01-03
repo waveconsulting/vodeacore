@@ -3,5 +3,5 @@
         {{ $model->label($key) }}
         @if(!empty($model->labelHelp($key)))<span class="label-help">({{ $model->labelHelp($key) }})</span>@endif
     </label>
-    @include('admin.cms.form.field.'.$formType)
+    @include('cms::form.field.'.$formType)
 </div>

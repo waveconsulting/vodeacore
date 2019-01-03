@@ -2,7 +2,6 @@
 
 namespace Vodea\VodeaCore;
 
-use App\Blade\CustomBlade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -24,12 +23,16 @@ class VodeaCoreProvider  extends ServiceProvider {
 			'/app/Util/',
 			'/app/Util/DataTable/',
 		]);
-		Config::set('view.paths', array_merge(Config::get('view.paths'), [
+		/*Config::set('view.paths', array_merge(Config::get('view.paths'), [
 			__DIR__.'/views',
-		]));
+		]));*/
 
-		CustomBlade::LoadCustomBlade();
-	}
+        $this->loadViewsFrom(__DIR__.'/views/cms', 'cms');
+
+        /*$this->publishes([
+            __DIR__.'/views/cms' => resource_path('views/cms'),
+        ]);*/
+    }
 
 	public static function IncludeMultipleFile($pathList){
 		foreach($pathList as $path){

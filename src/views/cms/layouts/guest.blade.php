@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="{!! url('/') !!}/favicon.ico"/>
 
-    @include('admin.cms.layouts.part.css')
+    @include('cms::layouts.part.css')
 
     @yield('cssCustom')
 
@@ -24,7 +24,7 @@
 
 
 
-@include('admin.cms.layouts.part.js')
+@include('cms::layouts.part.js')
 @yield('jsCustom')
 
 </body>

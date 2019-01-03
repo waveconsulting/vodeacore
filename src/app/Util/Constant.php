@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Util;
+namespace App\Util\VodeaCore;
 
 class Constant {
 

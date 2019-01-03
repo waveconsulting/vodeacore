@@ -1,4 +1,4 @@
-@extends('admin.cms.layouts.authorized')
+@extends('cms::layouts.authorized')
 
 @section('metaTitle', 'Informational Pages')
 

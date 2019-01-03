@@ -3,7 +3,7 @@
 namespace App\Entity\Base;
 
 use App\Entity\Base\BaseEntity;
-use App\Util\CodingConstant;
+use App\Util\VodeaCore\CodingConstant;
 use Illuminate\Notifications\Notifiable;
 
 class User extends BaseEntity

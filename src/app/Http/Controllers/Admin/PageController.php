@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\VodeaCore\Admin;
 
 use App\Entity\Base\CMS;
 use App\Entity\Base\Page;
-use App\Http\Controllers\Controller;
-use App\Service\NotificationService;
+use App\Http\Controllers\VodeaCore\Controller;
+use App\Service\VodeaCore\NotificationService;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 
@@ -26,7 +26,7 @@ class PageController extends Controller {
             $list[] = new $subentity();
         }
 
-        return view('admin.cms.default.index', [
+        return view('cms::default.index', [
             'typeEntity' => $typeEntity,
             'list' => $list
         ]);
@@ -39,7 +39,7 @@ class PageController extends Controller {
         $model = $class::where(['type' => 'Page', 'subtype' => $subtype])->get()->first();
         if (empty($model)) $model = new $class();
 
-        return view('admin.cms.default.details', [
+        return view('cms::default.details', [
             'class' => $class,
             'model' => $model,
         ]);

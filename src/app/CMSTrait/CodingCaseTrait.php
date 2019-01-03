@@ -2,7 +2,7 @@
 
 namespace App\CMSTrait;
 
-use App\Util\CodingConstant;
+use App\Util\VodeaCore\CodingConstant;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 

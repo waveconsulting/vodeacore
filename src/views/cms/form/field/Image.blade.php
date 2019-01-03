@@ -2,7 +2,7 @@
 
     @if(!empty($model->getValue($key, $listItem, $language)))
         @foreach($model->getValue($key, $listItem, $language) as $imageKey=>$image)
-            @include('admin.cms.form.field.ImagePart')
+            @include('cms::form.field.ImagePart')
         @endforeach
     @endif
 
@@ -12,11 +12,11 @@
             $image = null;
         @endphp
         @if(empty($model->isDisabled($key)))
-            @include('admin.cms.form.field.ImagePart')
+            @include('cms::form.field.ImagePart')
         @endif
     @elseif( $imageCount >= count($model->getValue($key, $listItem, $language)) )
         @foreach( range(count($model->getValue($key, $listItem, $language)), $imageCount)  as $imageKey)
-            @include('admin.cms.form.field.ImagePart')
+            @include('cms::form.field.ImagePart')
         @endforeach
     @endif
 

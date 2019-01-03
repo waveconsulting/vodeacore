@@ -2,7 +2,7 @@
 
 namespace App\Entity\Base;
 
-use App\Util\CodingConstant;
+use App\Util\VodeaCore\CodingConstant;
 use Illuminate\Support\Facades\Config;
 
 class CMS extends BaseEntity {

@@ -1,4 +1,4 @@
-@extends('admin.cms.layouts.authorized')
+@extends('cms::layouts.authorized')
 
 @section('headerCustom')
     @php
@@ -20,7 +20,7 @@
 @section('authorizeContent')
 
     <form id="form" action="{!! $formUrl !!}" class="create-project form-horizontal" method="POST"  enctype="multipart/form-data">
-        @include('admin.cms.form.main')
+        @include('cms::form.main')
     </form>
 
 @endsection

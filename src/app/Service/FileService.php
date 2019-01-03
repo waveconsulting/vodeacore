@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\VodeaCore;
 
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;

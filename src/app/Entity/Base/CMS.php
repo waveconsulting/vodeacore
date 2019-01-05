@@ -89,7 +89,13 @@ class CMS extends BaseEntity {
         else {
             $json = $this->getContent($language);
 
-            if (empty($listItem)) return @$json->$key;
+            if (empty($listItem)) {
+                if (!isset($json->key) && substr(static::formType($key),0,5) == 'Image') {
+                    return [];
+                }else {
+                    return @$json->$key;
+                }
+            }
             else return @$listItem->$key;
         }
     }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+use App\Entity\Setting;
 
 function nameToBaseEntity($name){
     return 'App\\Entity\\Base\\'.$name;
@@ -33,5 +34,12 @@ function getImageUrlSize($filename, $size){
 function getNoPhoto(){
     return url('/') . '/assets/admin/images/broken-image.png';
 }
+
+function getSettingByKey($key){
+    $model = Setting::first();
+
+    return @$model->$key;
+}
+
 
 ?>

@@ -41,5 +41,22 @@ function getSettingByKey($key){
     return @$model->$key;
 }
 
+function getNonListDetailsSection($model){
+    $nonListType = [];
+    $list = $model::FORM_LIST;
+    foreach($model::FORM_TYPE as $key=>$type){
+        if (!isset($list[$key])){
+            $nonListType[] = $key;
+        }
+    }
+    return $nonListType;
+}
+
+function countImage($data) {
+    if ($data == '') $data = [];
+
+    return count($data);
+}
+
 
 ?>

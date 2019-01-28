@@ -89,6 +89,8 @@
 
     $(function () {
 
+        initAllElement();
+
         // Submit Button
         $('button[type=submit]').click(function () {
             var btn =  $(this).ladda();
@@ -125,29 +127,6 @@
         // End Form Validate
 
 
-        // Text Editor
-        if ($(".text-editor").length) {
-            tinymce.init({
-                selector: '.text-editor',
-                height: 500,
-                resize: true,
-                theme: 'modern',
-                menubar:false,
-                branding: false,
-                plugins: [
-                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                    'searchreplace wordcount visualblocks visualchars code fullscreen',
-                    'insertdatetime media nonbreaking save table contextmenu directionality',
-                    'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help'
-                ],
-                toolbar1: 'undo redo | insert | styleselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | help',
-                image_advtab: true,
-                content_css: []
-            });
-        }
-        // End Text Editor
-
-
         // Data Table
         $('.datatable').DataTable({
             "aLengthMenu": [
@@ -173,57 +152,134 @@
         // End Data Table
 
 
-        // Select 2
-        if ($('.select-custom').length) {
-            $('.select-custom').select2();
-        }
-        // End Select 2
+        if ($('.btn-add-row').length > 0) {
+            initPanelSection();
 
-        // Datepicker
-        if ($('.datepicker').length) {
-            $('.datepicker').datepicker({
-                todayBtn: "linked",
-                enableOnReadonly: true,
-                todayHighlight: true,
-                toggleActive: true,
-                format: "dd MM yyyy",
-                language: "id",
+            $('.btn-add-row').click(function () {
+                var parent = $(this).parents('.panel-section-wrapper');
+                var sectionTemplateHTML = parent.find('.panel-section-template').first().html();
+                var sectionContent = parent.find('.panel-list-wrapper').first();
+
+                sectionContent.append(sectionTemplateHTML);
+                var listSize = parent.find('.panel-list-wrapper .panel-section').length;
+                sectionContent.find('.panel-section .panel-title h4').last().html(listSize);
+
+                parent.find('.panel-list-wrapper .panel-section').last().find('[name]').each(function () {
+                    var formName = $(this).attr('name');
+                    formName = formName.replace("-1",(listSize-1));
+                    $(this).attr('name', formName);
+                });
+                initPanelSection();
+                initAllElement();
             });
         }
-        // End Datepicker
 
 
-        // Timepicker
-        if ($(".timepicker").length) {
-            $('.timepicker').datetimepicker({
-                format: 'HH:mm',
+
+        function initPanelSection() {
+            $('.remove-panel').click(function () {
+                var parent = $(this).parents('.panel-section-wrapper');
+                var panel = $(this).parents('.panel-section');
+                var deletedIndex = Number(panel.find('h4').html()) - 1;
+                var count = 1;
+
+                parent.find('.panel-list-wrapper .panel-section').each(function (index) {
+                    if (index == deletedIndex) return;
+
+                    $(this).find('h4').html(count);
+                    $(this).find('[name]').each(function(){
+                        var formName = $(this).attr('name');
+                        formName = formName.replace("["+index+"]","["+(count-1)+"]");
+                        $(this).attr('name', formName);
+                    });
+
+                    count++;
+                });
+
+
+                panel.remove();
+            })
+        }
+
+
+        function initAllElement() {
+
+            // Text Editor
+            if ($(".text-editor").length) {
+                tinymce.init({
+                    selector: '.text-editor',
+                    height: 500,
+                    resize: true,
+                    theme: 'modern',
+                    menubar:false,
+                    branding: false,
+                    plugins: [
+                        'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                        'searchreplace wordcount visualblocks visualchars code fullscreen',
+                        'insertdatetime media nonbreaking save table contextmenu directionality',
+                        'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help'
+                    ],
+                    toolbar1: 'undo redo | insert | styleselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | help',
+                    image_advtab: true,
+                    content_css: []
+                });
+            }
+            // End Text Editor
+
+            // Select 2
+            if ($('.select-custom').length) {
+                $('.select-custom').select2();
+            }
+            // End Select 2
+
+
+            // Timepicker
+            if ($(".timepicker").length) {
+                $('.timepicker').datetimepicker({
+                    format: 'HH:mm',
+                });
+            }
+            // End Timepicker
+
+
+            // Color Picker
+            if ($(".color-picker").length) {
+                $('.color-picker').asColorPicker();
+            }
+            // End Color Picker
+
+
+            // Rating Picker
+            $('.rating-picker').barrating('show', {
+                theme: 'bars-1to10'
             });
+            // End Rating Picker
+
+            // Datepicker
+            if ($('.datepicker').length) {
+                $('.datepicker').datepicker({
+                    todayBtn: "linked",
+                    enableOnReadonly: true,
+                    todayHighlight: true,
+                    toggleActive: true,
+                    format: "dd MM yyyy",
+                    language: "id",
+                });
+            }
+            // End Datepicker
+
+            // Image Upload
+            if ($('.btn-upload').length) {
+                $('.btn-upload').each(function () {
+                    $(this).off();
+                    addUploadDeleteFunction($(this));
+                });
+            }
+            // End Image Upload
+
         }
-        // End Timepicker
 
 
-        // Color Picker
-        if ($(".color-picker").length) {
-            $('.color-picker').asColorPicker();
-        }
-        // End Color Picker
-
-
-        // Rating Picker
-        $('.rating-picker').barrating('show', {
-            theme: 'bars-1to10'
-        });
-        // End Rating Picker
-
-
-        // Image Upload
-        if ($('.btn-upload').length) {
-            $('.btn-upload').each(function () {
-                $(this).off();
-                addUploadDeleteFunction($(this));
-            });
-        }
-        // End Image Upload
     });
 })(jQuery);
 

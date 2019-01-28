@@ -8,14 +8,14 @@
 
     @if($imageCount == -1)
         @php
-            $imageKey = count($model->getValue($key, $listItem, $language));
+            $imageKey = countImage($model->getValue($key, $listItem, $language));
             $image = null;
         @endphp
         @if(empty($model->isDisabled($key)))
             @include('cms::form.field.ImagePart')
         @endif
-    @elseif( $imageCount >= count($model->getValue($key, $listItem, $language)) )
-        @foreach( range(count($model->getValue($key, $listItem, $language)), $imageCount)  as $imageKey)
+    @elseif( $imageCount >= countImage($model->getValue($key, $listItem, $language)) )
+        @foreach( range(countImage($model->getValue($key, $listItem, $language)), $imageCount)  as $imageKey)
             @include('cms::form.field.ImagePart')
         @endforeach
     @endif

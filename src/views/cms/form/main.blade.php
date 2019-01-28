@@ -1,12 +1,3 @@
-@php
-    $isList = true;
-    if (empty($listType)) {
-        $listType = $model::FORM_TYPE;
-        $isList = false;
-    }
-@endphp
-
-
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">{!! @$title !!}</h4>
@@ -15,30 +6,56 @@
             @include('cms::form.meta')
         @endif
 
-        @foreach( $listType as $key=>$value)
-            @php
-                $formType = $model->formType($key);
-                if ($isList) $formType = $listType[$key];
+        @if(count(getNonListDetailsSection($model)) > 0)
+            @include('cms::form.section')
+        @endif
 
-                $allowedExtension = '';
+        @foreach($model::FORM_LIST as $listName=>$listType)
+            <div class="panel-section-wrapper">
 
-                if( strpos( $formType , 'Image' ) !== false ){
-                    $imageCount = (substr($formType, 6) - 1);
-                    $formType = 'Image';
-                    $allowedExtension = 'image/*';
-                }
+                <div class="panel-header">
+                    <h3 class="header-title">{{ keyToLabel($listName) }}</h3>
+                    <button type="button" class="btn btn-primary btn-add-row">Add Row <i class="fa fa-plus"></i></button>
+                </div>
 
-                if( strpos( $formType , 'Rating' ) !== false ){
-                    $ratingCount = (substr($formType, 7));
-                    $formType = 'Rating';
-                }
+                <div class="panel-list-wrapper">
+                    @if(!empty($model->getValue($listName, '', $language)))
+                        @foreach($model->getValue($listName, '', $language) as $listIndex=>$listItem)
+                            <div class="panel panel-default panel-section">
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <h4>{{ $listIndex+1 }}</h4>
+                                    </div>
+                                    <i class="fa fa-times remove-panel"></i>
+                                </div>
+                                <div class="panel-body">
+                                    @include('cms::form.section')
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
 
-                if (!isset($listItem)) $listItem = '';
-                if (!isset($listName)) $listName = '';
-                if (!isset($listIndex)) $listIndex = '';
-            @endphp
+                @php
+                    $listIndex = -1;
+                    $listItem = [];
+                @endphp
 
-            @include('cms::form.group')
+                <div style="display: none" class="panel-section-template">
+                    <div class="panel panel-default panel-section">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <h4></h4>
+                            </div>
+                            <i class="fa fa-times remove-panel"></i>
+                        </div>
+                        <div class="panel-body">
+                            @include('cms::form.section')
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         @endforeach
 
         @include('cms::form.button')

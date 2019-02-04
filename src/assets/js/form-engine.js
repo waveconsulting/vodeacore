@@ -129,6 +129,7 @@
 
         // Data Table
         $('.datatable').DataTable({
+            "ordering": false,
             "aLengthMenu": [
                 [5, 10, 15, -1],
                 [5, 10, 15, "All"]
@@ -262,8 +263,7 @@
                     enableOnReadonly: true,
                     todayHighlight: true,
                     toggleActive: true,
-                    format: "dd MM yyyy",
-                    language: "id",
+                    format: "yyyy-mm-dd",
                 });
             }
             // End Datepicker

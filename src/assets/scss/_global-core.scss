@@ -28,6 +28,10 @@ body {
   font-size: 12px;
 }
 
+.input-group-prepend {
+  height: 100%;
+}
+
 .footer {
   font-size: 12px;
   padding: 10px 1rem;
@@ -110,9 +114,21 @@ body {
 }
 
 
+.btn-small {
+  font-size: 11px;
+}
 
 
 .card {
+  .card-header {
+    @extend .display-flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
   .card-body {
     padding: 20px;
   }
@@ -147,6 +163,11 @@ body {
   td {
     height: 20px;
     padding: 10px;
+    white-space: unset;
+  }
+
+  .action-wrapper {
+    white-space: nowrap;
   }
 }
 
@@ -164,7 +185,7 @@ body {
 
     tbody td, thead th {
       height: 30px;
-      padding: 0px 15px;
+      padding: 10px 15px;
       font-size: 12px;
     }
   }

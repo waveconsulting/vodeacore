@@ -156,7 +156,7 @@ class CRUDService {
 				}
 			}
 		}
-		return $json[$formName];
+		return @$json[$formName];
 	}
 
 	private static function addIndexKey($object){

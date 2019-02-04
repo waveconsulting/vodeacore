@@ -133,7 +133,7 @@
         <!-- partial -->
 
         <!-- partial:sidebar -->
-        @include('cms::layouts.part.sidebar')
+        @include('admin.vodeacore.part.sidebar')
         <!-- partial -->
 
         <div class="main-panel">

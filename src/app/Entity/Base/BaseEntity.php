@@ -40,6 +40,8 @@ class BaseEntity extends Authenticatable {
     const AMOUNT_CURRENCY = 'Rp';
 
     const USE_META_SET = false;
+    const ALLOW_CREATE = true;
+    const ALLOW_DELETE = true;
 
     const FORM_META_TYPE = [
         'metaTitle'                 => 'Text',

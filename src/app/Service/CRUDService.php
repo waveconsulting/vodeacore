@@ -61,7 +61,7 @@ class CRUDService {
 			$listType = $model::FORM_LIST;
 			if (isset($listType[$formName])) continue;
 
-			if ($formType == 'FastSelect'){
+			if ($formType == 'SelectMultiple'){
                 $parentModel = class_basename(get_parent_class($model));
 
                 if ($parentModel != 'Page') {
@@ -99,11 +99,15 @@ class CRUDService {
 				if (!isset($json[$formName][$listIndex])) $json[$formName][$listIndex] = [];
 
 				foreach ($list as $listItemFormName => $listItemFormType) {
-					$updatedjson[$formName][$listIndex][$listItemFormName] = static::updateData((array)$json[$formName][$listIndex], $data[$formName][$listIndex], $listItemFormType, $listItemFormName, $model);
+					$updatedjson[$formName][$listIndex][$listItemFormName] = static::updateData((array)$json[$formName][$listIndex], $data[$formName][$listIndex], $listItemFormType, $listItemFormName, $model, true);
 				}
 				$listIndex++;
 			}
-			$json[$formName] = $updatedjson[$formName];
+            if (!$model::IS_CMS) {
+                $json[$formName] = json_encode($updatedjson[$formName]);
+            }else {
+                $json[$formName] = $updatedjson[$formName];
+            }
 		}
 
 		return $json;
@@ -116,7 +120,7 @@ class CRUDService {
         return @$updatedData;
     }
 
-	private static function updateData($json, $data, $formType, $formName, $model){
+	private static function updateData($json, $data, $formType, $formName, $model, $isList = false){
 		$dataKey = array_keys($data);
 		if (substr($formType,0,5) == 'Image') {
 			if (!$model::IS_CMS && !empty($json[$formName]) && is_string($json[$formName])) $json[$formName] = json_decode($json[$formName]);

@@ -31,7 +31,7 @@ trait SingleImageTrait {
 
 			if (isset($formType[$key]) && $formType[$key] == 'Image_1') {
 				if (count($value) > 0) $value = $value[0];
-				else $value = "";
+				else $value = [];
 			}
 			else if (isset($this->imageFields) && in_array($key, $this->imageFields)){
 				$value = $value[0];

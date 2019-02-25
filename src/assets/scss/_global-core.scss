@@ -562,3 +562,20 @@ body {
   }
 }
 // end panel
+
+
+// file input
+.hide {
+  display: none !important;
+}
+
+.input-group .file-change {
+  cursor: pointer;
+  transition: all 0.5s ease;
+  background-color: #ff4e4e;
+  color: white;
+  padding: 0px 12px;
+  @extend .display-flex;
+  align-items: center;
+}
+// end file input

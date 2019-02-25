@@ -276,6 +276,18 @@
                 });
             }
             // End Image Upload
+            
+            // File Input
+            $('.file-change').click(function (e) {
+                e.preventDefault();
+
+                $(this).parent().find('[type=hidden]').val('DELETE_FILE');
+
+                $(this).parent().toggleClass('hide');
+                $(this).parent().next().toggleClass('hide');
+            })
+            // File Input
+
 
         }
 

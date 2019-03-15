@@ -150,7 +150,15 @@ class CRUDService {
 			$json[$formName] = $updatedImage;
 
 			if (!$model::IS_CMS) $json[$formName] = json_encode($json[$formName]);
-		} else {
+		} elseif ($formType == 'File') {
+            if (isset($data[$formName]) && !is_string($data[$formName])) {
+                FileService::delete(@$json[$formName]);
+                $json[$formName] = FileService::UploadFile($data[$formName]);
+            }elseif (isset($data[$formName]) && $data[$formName] == 'DELETE_FILE'){
+                FileService::delete(@$json[$formName]);
+                $json[$formName] = null;
+            }
+        } else {
 			if (isset($data[$formName])){
 				$json[$formName] = $data[$formName];
 				if (($formType == 'Date' || $formType == 'DateRange') && !$model::IS_CMS){

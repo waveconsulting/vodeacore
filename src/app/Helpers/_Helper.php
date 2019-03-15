@@ -22,17 +22,39 @@ function keyToLabel($key){
 }
 
 function getImageUrl($filename){
-    if (empty($filename)) return getNoPhoto();
-    return url('/') . '/assets/upload/md/' . $filename;
+    if (env('APP_ENV') != 'production') {
+        if (empty($filename)) return getNoPhoto();
+        return url('/') . '/assets/upload/md/' . $filename;
+    } else {
+        return getProductionImageUrl($filename);
+    }
+}
+
+function getProductionImageUrl($filename){
+    if (empty($filename)) return getProductionNoPhoto();
+    return env('APP_URL') . '/assets/upload/md/' . $filename;
 }
 
 function getImageUrlSize($filename, $size){
-    if (empty($filename)) return getNoPhoto();
-    return url('/') . '/assets/upload/' . $size .'/'. $filename;
+    if (env('APP_ENV') != 'production') {
+        if (empty($filename)) return getNoPhoto();
+        return url('/') . '/assets/upload/' . $size .'/'. $filename;
+    }else {
+        return getProductionImageUrlSize($filename, $size);
+    }
+}
+
+function getProductionImageUrlSize($filename, $size){
+    if (empty($filename)) return getProductionNoPhoto();
+    return env('APP_URL') . '/assets/upload/' . $size .'/'. $filename;
 }
 
 function getNoPhoto(){
     return url('/') . '/assets/admin/images/broken-image.png';
+}
+
+function getProductionNoPhoto(){
+    return env('APP_URL') . '/assets/admin/images/broken-image.png';
 }
 
 function isActiveRoute($arrayRouteName){

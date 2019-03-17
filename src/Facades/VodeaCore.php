@@ -31,10 +31,10 @@ class VodeaCore extends Facade
 		if (count($routeEnable) != 5) $routeEnable = [true, true, true, true, true];
 		$controller = 'Admin\\'.ucfirst($single).'Controller';
 
-		if($routeEnable[0]) Route::get('/'.$plural, $controller.'@index')->name('admin.'.$plural);
-		if($routeEnable[1]) Route::get('/'.$single.'/{id?}', $controller.'@details')->name('admin.'.$single);
-		if($routeEnable[2]) Route::post('/'.$single.'/{id?}', $controller.'@save')->name('admin.'.$single.'.save');
-		if($routeEnable[3]) Route::get('/'.$single.'/delete/{id?}', $controller.'@delete')->name('admin.'.$single.'.delete');
+		if($routeEnable[0]) Route::get('/'.$plural, $controller.'@index')->name($single.'.list');
+		if($routeEnable[1]) Route::get('/'.$single.'/{id?}', $controller.'@details')->name($single.'.details');
+		if($routeEnable[2]) Route::post('/'.$single.'/{id?}', $controller.'@save')->name($single.'.save');
+		if($routeEnable[3]) Route::get('/'.$single.'/delete/{id?}', $controller.'@delete')->name($single.'.delete');
 		if($routeEnable[4]) Route::post('/'.$plural, $controller.'@indexData')->name('admin.'.$plural.'Data');
 	}
 

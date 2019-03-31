@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Str;
 use App\Entity\Setting;
+use Illuminate\Support\Facades\Config;
 
 function nameToBaseEntity($name){
     return 'App\\Entity\\Base\\'.$name;
@@ -99,5 +100,12 @@ function countImage($data) {
     return count($data);
 }
 
+function getMenuConfig() {
+    $menuList = json_encode(Config::get('cms.menu'));
+
+    $menuList = json_decode($menuList);
+
+    return $menuList;
+}
 
 ?>

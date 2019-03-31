@@ -159,7 +159,7 @@ class CRUDService {
                 $json[$formName] = null;
             }
         } else {
-			if (isset($data[$formName])){
+            if (array_key_exists($formName, $data)){
 				$json[$formName] = $data[$formName];
 				if (($formType == 'Date' || $formType == 'DateRange') && !$model::IS_CMS){
 					$json[$formName] = new \Carbon($data[$formName]);

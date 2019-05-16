@@ -578,4 +578,197 @@ body {
   @extend .display-flex;
   align-items: center;
 }
+
+.custom-input {
+  font-size: 14px;
+  display: block;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 0px;
+
+  input {
+    display: none;
+  }
+
+  .checker {
+    position: relative;
+    margin-right: 10px;
+    display: block;
+    height: 22.5px;
+    width: 22.5px;
+
+    &:after {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+  }
+
+  &.type-radio {
+
+    .checker {
+      background-color: transparent;
+      border: 3px solid #eaeaea;
+      border-radius: 50%;
+
+      &:after {
+        content: '';
+        position: absolute;
+        width: 9px;
+        height: 9px;
+        background: black;
+        border-radius: 100%;
+      }
+    }
+
+    &:hover {
+
+      .checker {
+        border-color: black;
+      }
+
+    }
+
+    input {
+
+      &:checked ~ .checker {
+        border-color: black;
+
+        &:after {
+          display: block;
+        }
+
+      }
+    }
+  }
+
+  &.type-checkbox {
+
+    .checker {
+      background-color: transparent;
+      border: 2px solid #eaeaea;
+      border-radius: 5px;
+      width: 22.5px;
+      height: 22.5px;
+      background: white;
+
+      &:after {
+        content: '\f00c';
+        font-family: 'FontAwesome';
+        position: absolute;
+        color: white;
+        border-radius: 100%;
+      }
+    }
+
+    &:hover {
+
+      .checker {
+        border-color: black;
+
+        &.blue-style {
+          border-color: black;
+        }
+      }
+
+    }
+
+    input {
+
+      &:checked, &.indeterminate {
+        ~ .checker {
+          border-color: black;
+          background: black;
+
+          &.blue-style {
+            border-color: black;
+            background: black;
+          }
+
+          &:after {
+            display: block;
+          }
+        }
+      }
+
+      &.indeterminate ~ .checker {
+        &:after {
+          content: '\f068';
+        }
+      }
+    }
+  }
+
+  &.type-label {
+    display: inline-block;
+
+    .checker {
+      display: inline-block;
+      background-color: transparent;
+      border: 1px solid black;
+      padding: 8px;
+      color: black;
+      min-width: 70px;
+      border-radius: 8px;
+      width: auto;
+      height: auto;
+      text-align: center;
+    }
+
+    input {
+
+      &:checked ~ .checker {
+        color: white;
+        background: black;
+      }
+    }
+  }
+
+  &.type-pills {
+    display: block;
+    position: relative;
+    height: 20px;
+    width: 35px;
+
+    .checker {
+      background-color: #ccc;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: .4s;
+      width: auto;
+      height: auto;
+      border-radius: 20px;
+      margin: 0px;
+
+      &:before {
+        background-color: #fff;
+        bottom: 2.2px;
+        content: "";
+        height: 16px;
+        left: 3px;
+        position: absolute;
+        transition: .4s;
+        width: 16px;
+        border-radius: 50%;
+      }
+    }
+
+    input {
+
+      &:checked ~ .checker {
+        background-color: $main-color;
+
+        &:before {
+          transform: translateX(14px);
+        }
+
+      }
+    }
+  }
+}
 // end file input

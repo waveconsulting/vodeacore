@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .display-flex, .input-group .file-change, .image-section, .range-wrapper, .card .card-header, .footer .footer-inline {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -413,6 +414,143 @@ body {
   color: white;
   padding: 0px 12px;
   align-items: center;
+}
+
+.custom-input {
+  font-size: 14px;
+  display: block;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 0px;
+}
+.custom-input input {
+  display: none;
+}
+.custom-input .checker {
+  position: relative;
+  margin-right: 10px;
+  display: block;
+  height: 22.5px;
+  width: 22.5px;
+}
+.custom-input .checker:after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+.custom-input.type-radio .checker {
+  background-color: transparent;
+  border: 3px solid #eaeaea;
+  border-radius: 50%;
+}
+.custom-input.type-radio .checker:after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: black;
+  border-radius: 100%;
+}
+.custom-input.type-radio:hover .checker {
+  border-color: black;
+}
+.custom-input.type-radio input:checked ~ .checker {
+  border-color: black;
+}
+.custom-input.type-radio input:checked ~ .checker:after {
+  display: block;
+}
+.custom-input.type-checkbox .checker {
+  background-color: transparent;
+  border: 2px solid #eaeaea;
+  border-radius: 5px;
+  width: 22.5px;
+  height: 22.5px;
+  background: white;
+}
+.custom-input.type-checkbox .checker:after {
+  content: "";
+  font-family: "FontAwesome";
+  position: absolute;
+  color: white;
+  border-radius: 100%;
+}
+.custom-input.type-checkbox:hover .checker {
+  border-color: black;
+}
+.custom-input.type-checkbox:hover .checker.blue-style {
+  border-color: black;
+}
+.custom-input.type-checkbox input:checked ~ .checker, .custom-input.type-checkbox input.indeterminate ~ .checker {
+  border-color: black;
+  background: black;
+}
+.custom-input.type-checkbox input:checked ~ .checker.blue-style, .custom-input.type-checkbox input.indeterminate ~ .checker.blue-style {
+  border-color: black;
+  background: black;
+}
+.custom-input.type-checkbox input:checked ~ .checker:after, .custom-input.type-checkbox input.indeterminate ~ .checker:after {
+  display: block;
+}
+.custom-input.type-checkbox input.indeterminate ~ .checker:after {
+  content: "";
+}
+.custom-input.type-label {
+  display: inline-block;
+}
+.custom-input.type-label .checker {
+  display: inline-block;
+  background-color: transparent;
+  border: 1px solid black;
+  padding: 8px;
+  color: black;
+  min-width: 70px;
+  border-radius: 8px;
+  width: auto;
+  height: auto;
+  text-align: center;
+}
+.custom-input.type-label input:checked ~ .checker {
+  color: white;
+  background: black;
+}
+.custom-input.type-pills {
+  display: block;
+  position: relative;
+  height: 20px;
+  width: 35px;
+}
+.custom-input.type-pills .checker {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.4s;
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  margin: 0px;
+}
+.custom-input.type-pills .checker:before {
+  background-color: #fff;
+  bottom: 2.2px;
+  content: "";
+  height: 16px;
+  left: 3px;
+  position: absolute;
+  transition: 0.4s;
+  width: 16px;
+  border-radius: 50%;
+}
+.custom-input.type-pills input:checked ~ .checker {
+  background-color: #2a72b3;
+}
+.custom-input.type-pills input:checked ~ .checker:before {
+  transform: translateX(14px);
 }
 
 /*# sourceMappingURL=vodeacore.css.map */

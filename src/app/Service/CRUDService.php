@@ -15,6 +15,11 @@ class CRUDService {
 		$object = $class::get($id);
 		$updatedData = static::FormToJson($object->toArray(), $dataFromUser, $object);
 		$object->fill($updatedData);
+        if (count($class::REMOVE_APPENDS)){
+            foreach($class::REMOVE_APPENDS as $appendName){
+                unset($object->$appendName);
+            }
+        }
         if ($class::USE_META_SET){
             foreach($class::FORM_META_TYPE as $formName=>$formType){
                 $object->$formName = $updatedData[$formName];

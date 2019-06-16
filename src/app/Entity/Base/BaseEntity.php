@@ -19,6 +19,8 @@ class BaseEntity extends Authenticatable {
 
     protected $dates = ['deleted_at'];
 
+    const REMOVE_APPENDS = [];
+
     const FORM_LAYOUT = [];
 
     const FORM_LABEL = [];

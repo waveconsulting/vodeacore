@@ -3,6 +3,27 @@
 use Illuminate\Support\Str;
 use App\Entity\Setting;
 use Illuminate\Support\Facades\Config;
+use Carbon\Carbon;
+
+function getDateOnly($stringDate){
+    return (new Carbon($stringDate))->format('d M Y');
+}
+
+function getMonthYearOnly($stringDate){
+    return (new Carbon($stringDate))->format('M\`y');
+}
+
+function getTimeOnly($stringDate){
+    return (new Carbon($stringDate))->format('h:i:s A');
+}
+
+function getDays($stringDate){
+    return Carbon::now()->diffInDays(new Carbon($stringDate));
+}
+
+function getDateForDB($stringDate) {
+    return (new Carbon($stringDate))->format('Y-m-d');
+}
 
 function nameToBaseEntity($name){
     return 'App\\Entity\\Base\\'.$name;

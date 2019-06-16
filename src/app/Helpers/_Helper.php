@@ -17,6 +17,18 @@ function getTimeOnly($stringDate){
     return (new Carbon($stringDate))->format('h:i:s A');
 }
 
+function getDayOnly($stringDate){
+    return (new Carbon($stringDate))->format('d');
+}
+
+function getMonthOnly($stringDate){
+    return (new Carbon($stringDate))->format('n');
+}
+
+function getYearOnly($stringDate){
+    return (new Carbon($stringDate))->format('Y');
+}
+
 function getDays($stringDate){
     return Carbon::now()->diffInDays(new Carbon($stringDate));
 }

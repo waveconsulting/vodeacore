@@ -9,6 +9,8 @@
 <script src="{!! url('/') !!}/assets/vodea/vodeacore/vendors/ladda/js/ladda.jquery.min.js"></script>
 <script src="{!! url('/') !!}/assets/vodea/vodeacore/vendors/ladda/js/spin.min.js"></script>
 <script src="{!! url('/') !!}/assets/vodea/vodeacore/vendors/ladda/js/ladda.min.js"></script>
+
+<script src="{!! url('/') !!}/assets/vodea/vodeacore/vendors/autonumeric/autoNumeric.min.js"></script>
 <!-- End plugin js for this page-->
 
 <!-- inject:js -->

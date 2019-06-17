@@ -288,6 +288,26 @@
             })
             // File Input
 
+            // AutoNumeric
+            if ($('.autonumeric').length) {
+                $('.autonumeric').off();
+
+                var autonumericOptions = {
+                    digitGroupSeparator: '.',
+                    decimalPlacesOverride:0,
+                    decimalCharacter  : ',',
+                    unformatOnSubmit : true
+                };
+
+                $('.autonumeric').each(function () {
+                    $(this).autoNumeric('init', autonumericOptions);
+                })
+
+                $('.autonumeric').change(function(){
+                    $(this).parent().find('.autonumericvalue').first().val( $(this).autoNumeric('get') );
+                })
+            }
+            // AutoNumeric
 
         }
 

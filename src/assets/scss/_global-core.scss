@@ -227,7 +227,7 @@ body {
 .form-control {
   border-color: #dddddd;
   height: 30px;
-  padding: 5px !important;
+  padding: 5px 10px !important;
 
   &.control-half {
     width: 50%;
@@ -255,7 +255,7 @@ body {
     .select2-selection {
       border: 1px solid #dddddd;
       height: 30px;
-      padding: 5px !important;
+      padding: 5px 10px!important;
 
       .select2-selection__rendered {
         height: 20px;
@@ -772,3 +772,17 @@ body {
   }
 }
 // end file input
+
+// field amount
+.amount-wrapper {
+  width: 50%;
+
+  .input-group-text {
+    border-color: #dddddd;
+    height: 30px;
+    padding: 5px 15px!important;
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+// end field amount

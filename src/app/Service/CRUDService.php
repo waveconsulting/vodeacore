@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\Config;
 
 
 class CRUDService {
-    public static function SaveWithData($id, $class) {
-        return static::SaveWithDataFromUser($id, $class, Input::all());
-    }
+	public static function SaveWithData($id, $class) {
+		return static::SaveWithDataFromUser($id, $class, Input::all());
+	} 
 
-    public static function SaveWithDataFromUser($id, $class, $dataFromUser) {
-        $object = $class::get($id);
-        $updatedData = static::FormToJson($object->toArray(), $dataFromUser, $object);
-        $object->fill($updatedData);
+	public static function SaveWithDataFromUser($id, $class, $dataFromUser) {
+		$object = $class::get($id);
+		$updatedData = static::FormToJson($object->toArray(), $dataFromUser, $object);
+		$object->fill($updatedData);
         if (count($class::REMOVE_APPENDS)){
             foreach($class::REMOVE_APPENDS as $appendName){
                 unset($object->$appendName);
@@ -25,22 +25,32 @@ class CRUDService {
                 $object->$formName = $updatedData[$formName];
             }
         }
-        $object->save();
-        return $object;
-    }
+		$object->save();
+		return $object;
+	}
 
-    public static function SaveWithDataCMS($model) {
-        $data = Input::all();
+	public static function SaveWithDataCMS($model) {
+		$data = Input::all();
 
-        $model->json = static::FormToJson((array)$model->json, $data, $model);
+		if (count(Config::get('cms.LANGUAGE')) > 1){
+			foreach(Config::get('cms.LANGUAGE') as $language){
+				if (!isset($data[$language])) continue;
 
-        static::addIndexKey($model);
-        $model->save();
+				$json = $model->getContent($language);
+				$json = static::FormToJson((array)$json, $data[$language], $model);
+				$model->saveContent($language, $json);
+			}
+		} else {
+			$model->json = static::FormToJson((array)$model->json, $data, $model);
+		}
 
-        return $model;
-    }
+		static::addIndexKey($model);
+		$model->save();
 
-    public static function FormToJson($json, $data, $model) {
+		return $model;
+	}
+
+	public static function FormToJson($json, $data, $model) {
 
         if (@$model::USE_META_SET){
             foreach($model::FORM_META_TYPE as $formName=>$formType){
@@ -48,17 +58,15 @@ class CRUDService {
             }
         }
 
-        foreach($model::FORM_TYPE as $formName=>$formType){
-            if (in_array($formName, $model::MANUAL_SAVE_FIELD)) {
-                unset($json[$formName]);
-                continue;
-            }
-            $listType = $model::FORM_LIST;
-            $listFormLanguage = $model::FORM_TYPE_LANGUAGE;
+		foreach($model::FORM_TYPE as $formName=>$formType){
+			if (in_array($formName, $model::MANUAL_SAVE_FIELD)) {
+				unset($json[$formName]);
+				continue;
+			}
+			$listType = $model::FORM_LIST;
+			if (isset($listType[$formName])) continue;
 
-            if (isset($listType[$formName])) continue;
-
-            if ($formType == 'SelectMultiple'){
+			if ($formType == 'SelectMultiple'){
                 $parentModel = class_basename(get_parent_class($model));
 
                 if ($parentModel != 'Page') {
@@ -74,51 +82,41 @@ class CRUDService {
                 }else {
                     $json[$formName] = json_encode($data[$formName]);
                 }
-            } else if ($formType == 'DateRange' || $formType == 'TimeRange') {
-                $json[$formName.'From'] = static::updateData((array)$json, $data, $formType, $formName.'From', $model);
-                $json[$formName.'To'] = static::updateData((array)$json, $data, $formType, $formName.'To', $model);
-            } else {
-                $json[$formName] = static::updateData((array)$json, $data, $formType, $formName, $model);
+			} else if ($formType == 'DateRange' || $formType == 'TimeRange') {
+				$json[$formName.'From'] = static::updateData((array)$json, $data, $formType, $formName.'From', $model);
+				$json[$formName.'To'] = static::updateData((array)$json, $data, $formType, $formName.'To', $model);
+			} else {
+				$json[$formName] = static::updateData((array)$json, $data, $formType, $formName, $model);
+			}
+		}
+		foreach($model::FORM_LIST as $formName=>$list){
+			if (in_array($formName, $model::MANUAL_SAVE_FIELD)) {
+				unset($json[$formName]);
+				continue;
+			}
+			if (count($list) == 0) break;
+			if (!isset($data[$formName])) continue;
 
-                if (in_array($formName, $listFormLanguage)) {
-                    if(count(Config::get('cms.LANGUAGE_ADD'))) {
-                        foreach (Config::get('cms.LANGUAGE_ADD') as $langAdd) {
-                            $formNameLang = $formName.'_'.$langAdd;
+			$listIndex = 0;
 
-                            $json[$formNameLang] = static::updateData((array)$json, $data, $formType, $formNameLang, $model);
-                        }
-                    }
-                }
-            }
-        }
-        foreach($model::FORM_LIST as $formName=>$list){
-            if (in_array($formName, $model::MANUAL_SAVE_FIELD)) {
-                unset($json[$formName]);
-                continue;
-            }
-            if (count($list) == 0) break;
-            if (!isset($data[$formName])) continue;
+			$updatedjson = [$formName => []];
+			while(isset($data[$formName][$listIndex])) {
+				if (!isset($json[$formName][$listIndex])) $json[$formName][$listIndex] = [];
 
-            $listIndex = 0;
-
-            $updatedjson = [$formName => []];
-            while(isset($data[$formName][$listIndex])) {
-                if (!isset($json[$formName][$listIndex])) $json[$formName][$listIndex] = [];
-
-                foreach ($list as $listItemFormName => $listItemFormType) {
-                    $updatedjson[$formName][$listIndex][$listItemFormName] = static::updateData((array)$json[$formName][$listIndex], $data[$formName][$listIndex], $listItemFormType, $listItemFormName, $model, true);
-                }
-                $listIndex++;
-            }
+				foreach ($list as $listItemFormName => $listItemFormType) {
+					$updatedjson[$formName][$listIndex][$listItemFormName] = static::updateData((array)$json[$formName][$listIndex], $data[$formName][$listIndex], $listItemFormType, $listItemFormName, $model, true);
+				}
+				$listIndex++;
+			}
             if (!$model::IS_CMS) {
                 $json[$formName] = json_encode($updatedjson[$formName]);
             }else {
                 $json[$formName] = $updatedjson[$formName];
             }
-        }
+		}
 
-        return $json;
-    }
+		return $json;
+	}
 
     public static function useUpdateData($json, $data, $formType, $formName, $model){
         $updatedData = static::updateData($json, $data, $formType, $formName, $model);
@@ -127,37 +125,37 @@ class CRUDService {
         return @$updatedData;
     }
 
-    private static function updateData($json, $data, $formType, $formName, $model, $isList = false){
-        $dataKey = array_keys($data);
-        if (substr($formType,0,5) == 'Image') {
-            if (!$model::IS_CMS && !empty($json[$formName]) && is_string($json[$formName])) $json[$formName] = json_decode($json[$formName]);
+	private static function updateData($json, $data, $formType, $formName, $model, $isList = false){
+		$dataKey = array_keys($data);
+		if (substr($formType,0,5) == 'Image') {
+			if (!$model::IS_CMS && !empty($json[$formName]) && is_string($json[$formName])) $json[$formName] = json_decode($json[$formName]);
 
-            $imageKeys = preg_grep('/'.$formName.'/', $dataKey);
-            $updatedImage = [];
-            foreach($imageKeys as $imageKey){
-                $imageIndex = substr($imageKey, strlen($formName), strlen($imageKey));
+			$imageKeys = preg_grep('/'.$formName.'/', $dataKey);
+			$updatedImage = [];
+			foreach($imageKeys as $imageKey){
+				$imageIndex = substr($imageKey, strlen($formName), strlen($imageKey));
 
-                if (!isset($json[$formName])) $json[$formName] = [];
+				if (!isset($json[$formName])) $json[$formName] = [];
 
-                if (empty($data[$formName.$imageIndex])){
-                    continue;
-                }
+				if (empty($data[$formName.$imageIndex])){
+					continue;
+				}
 
-                if ($data[$formName.$imageIndex] == 'DELETE_IMAGE'){
-                    if (isset($json[$formName][$imageIndex]))ImageService::delete( $json[$formName][$imageIndex] );
-                    $json[$formName][$imageIndex] = '';
-                } else if (!is_string($data[$formName.$imageIndex])){
-                    $json[$formName][$imageIndex] = ImageService::uploadImage($data[$formName.$imageIndex]);
-                } else {
-                    $json[$formName][$imageIndex] = $data[$formName.$imageIndex];
-                }
+				if ($data[$formName.$imageIndex] == 'DELETE_IMAGE'){
+					if (isset($json[$formName][$imageIndex]))ImageService::delete( $json[$formName][$imageIndex] );
+					$json[$formName][$imageIndex] = '';
+				} else if (!is_string($data[$formName.$imageIndex])){
+					$json[$formName][$imageIndex] = ImageService::uploadImage($data[$formName.$imageIndex]);
+				} else {
+					$json[$formName][$imageIndex] = $data[$formName.$imageIndex];
+				}
 
-                if (!empty($json[$formName][$imageIndex])) $updatedImage[] = $json[$formName][$imageIndex];
-            }
-            $json[$formName] = $updatedImage;
+				if (!empty($json[$formName][$imageIndex])) $updatedImage[] = $json[$formName][$imageIndex];
+			}
+			$json[$formName] = $updatedImage;
 
-            if (!$model::IS_CMS) $json[$formName] = json_encode($json[$formName]);
-        } elseif ($formType == 'File') {
+			if (!$model::IS_CMS) $json[$formName] = json_encode($json[$formName]);
+		} elseif ($formType == 'File') {
             if (isset($data[$formName]) && !is_string($data[$formName])) {
                 FileService::delete(@$json[$formName]);
                 $json[$formName] = FileService::UploadFile($data[$formName]);
@@ -167,31 +165,31 @@ class CRUDService {
             }
         } else {
             if (array_key_exists($formName, $data)){
-                $json[$formName] = $data[$formName];
-                if (($formType == 'Date' || $formType == 'DateRange') && !$model::IS_CMS){
-                    $json[$formName] = new \Carbon($data[$formName]);
-                } else {
-                    $json[$formName] = $data[$formName];
-                }
-            }
-        }
-        return @$json[$formName];
-    }
+				$json[$formName] = $data[$formName];
+				if (($formType == 'Date' || $formType == 'DateRange') && !$model::IS_CMS){
+					$json[$formName] = new \Carbon($data[$formName]);
+				} else {
+					$json[$formName] = $data[$formName];
+				}
+			}
+		}
+		return @$json[$formName];
+	}
 
-    private static function addIndexKey($object){
-        if (count($object::INDEX_KEY) == 0) return;
+	private static function addIndexKey($object){
+		if (count($object::INDEX_KEY) == 0) return;
 
-        if (count(Config::get('cms.LANGUAGE')) > 1){
-            $language = Config::get('cms.LANGUAGE')[0];
-            $json = $object->getContent($language);
-            foreach($object::INDEX_KEY as $key=>&$column){
-                if (isset($json->$key)) $object->$column = $json->$key;
-            }
-        } else {
-            foreach($object::INDEX_KEY as $key=>&$column){
-                if (isset($json->$key)) $object->$column = $object->json->$key;
-            }
-        }
+		if (count(Config::get('cms.LANGUAGE')) > 1){
+			$language = Config::get('cms.LANGUAGE')[0];
+			$json = $object->getContent($language);
+			foreach($object::INDEX_KEY as $key=>&$column){
+				if (isset($json->$key)) $object->$column = $json->$key;
+			}
+		} else {
+			foreach($object::INDEX_KEY as $key=>&$column){
+				if (isset($json->$key)) $object->$column = $object->json->$key;
+			}
+		}
 
-    }
+	}
 }

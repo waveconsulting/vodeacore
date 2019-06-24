@@ -27,7 +27,6 @@ class BaseEntity extends Authenticatable {
     const FORM_LABEL_HELP = [];
     const FORM_TYPE = [];
     const FORM_TYPE_REMOVE = [];
-    const FORM_TYPE_LANGUAGE = [];
     const FORM_IMAGE_TYPE = [];
     const FORM_IMAGE_LIMIT = [];
     const FORM_SELECT_LIST = [];
@@ -38,6 +37,8 @@ class BaseEntity extends Authenticatable {
     const INDEX_FIELD = [];
     const MANUAL_SAVE_FIELD = [];
     const IS_CMS = false;
+    const LANGUAGE = ['en', 'zh_SG'];
+    const LANGUAGE_MULTI = ['ALL'];
     const AMOUNT_CURRENCY = 'Rp';
 
     const USE_META_SET = false;
@@ -106,16 +107,14 @@ class BaseEntity extends Authenticatable {
 
 
     //FORM ENGINE start
-    public static function label($key, $language = '', $useFor = 'FORM'){
+    public static function label($key, $useFor = 'FORM'){
         $labels = static::FORM_LABEL;
         if ($useFor == 'META'){
             $labels = static::FORM_META_LABEL;
         }
         if (isset($labels[$key])) return $labels[$key];
 
-        if(!empty($language)) $key .= '_'.$language;
-
-        $label = keyToLabel($key, $language);
+        $label = keyToLabel($key);
         return $label;
     }
     public static function labelHelp($key, $useFor = 'FORM'){
@@ -163,8 +162,6 @@ class BaseEntity extends Authenticatable {
         return [];
     }
     public function getValue($key, $listItem, $language){
-        if (!empty($language)) $key .= '_'.$language;
-
         if (empty($listItem)) {
             if (!static::IS_CMS && substr(static::formType($key),0,5) == 'Image' && !is_array($this->$key) ){
                 if (substr(@$this->$key,0,1) == '[')
@@ -213,28 +210,22 @@ class BaseEntity extends Authenticatable {
     }
     public function getFormName($key, $listName, $listIndex, $language, $suffix = ''){
         $formName = '';
-        $languageList = Config::get('cms.LANGUAGE_ADD');
+        $languageMulti = Config::get('cms.LANGUAGE_MULTI');
+        $languageList = Config::get('cms.LANGUAGE');
+
+        if (!empty($language) && count($languageList) > 0  && count($languageMulti) == 1 && $languageMulti[0] == 'ALL') {
+            $formName .= $language;
+        }
 
         if (!empty($listName) && isset($listIndex)) {
             if (empty($formName)) $formName .= $listName;
             else $formName .= '['.$listName.']';
 
             $formName .= '['.$listIndex.$suffix.']';
-
-            if (!empty($language) && count($languageList) > 0) {
-                $formName .= '['.$key.'_'.$language.$suffix.']';
-            } else {
-                $formName .= '['.$key.$suffix.']';
-            }
         }
 
-        if (empty($formName)) {
-            if (!empty($language) && count($languageList) > 0) {
-                $formName .= $key.'_'.$language.$suffix;
-            } else {
-                $formName .= $key.$suffix;
-            }
-        }
+        if (empty($formName)) $formName .= $key.$suffix;
+        else $formName .= '['.$key.$suffix.']';
 
         if ($this->formType($key)=='SelectMultiple') $formName .= '[]';
         return $formName;

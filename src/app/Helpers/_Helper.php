@@ -50,16 +50,9 @@ function get_class_short($class) {
     return array_pop($path);
 }
 
-function keyToLabel($key, $language = ''){
+function keyToLabel($key){
     $key = Str::snake($key);
-    $string = ucfirst(strtolower(str_replace("_", " ", $key)));
-
-    if (!empty($language)) {
-        $languageNotes = Config::get('cms.LANGUAGE_NOTES');
-        $string = str_replace($language, $languageNotes[$language], $string);
-    }
-
-    return $string;
+    return ucfirst(strtolower(str_replace("_", " ", $key)));
 }
 
 function getImageUrl($filename){
@@ -146,23 +139,6 @@ function getMenuConfig() {
     $menuList = json_decode($menuList);
 
     return $menuList;
-}
-
-function getSelectedLang () {
-    if (empty(config('selectedLanguage'))) {
-        \App::setLocale(Config::get('cms.LANGUAGE'));
-
-        return Config::get('cms.LANGUAGE');
-    }
-
-    \App::setLocale(config('selectedLanguage'));
-    return config('selectedLanguage');
-}
-
-function langAppendUrl(){
-    if (config('selectedLanguage') != Config::get('cms.LANGUAGE')) return '?lang='.config('selectedLanguage');
-
-    return '';
 }
 
 ?>

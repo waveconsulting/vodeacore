@@ -22,16 +22,12 @@ class Page extends CMS {
     ];
 
     public function getValue($key, $listItem, $language){
-        $tempKey = $key;
-
-        if (!empty($language)) $tempKey .= '_'.$language;
-
-        if (isset($this->json->$tempKey)) {
-            return @$this->json->$tempKey;
-        } else if (isset($listItem->$tempKey)) {
-            return @$listItem->$tempKey;
-        } else if (isset($this->$tempKey)) {
-            return @$this->$tempKey;
+        if (count(Config::get('cms.LANGUAGE')) == 1 && isset($this->json->$key)) {
+            return @$this->json->$key;
+        } else if (count(Config::get('cms.LANGUAGE')) == 1 && isset($listItem->$key)) {
+            return @$listItem->$key;
+        } else if (isset($this->$key)) {
+            return @$this->$key;
         } else {
             return parent::getValue($key, $listItem, $language);
         }

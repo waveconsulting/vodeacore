@@ -38,18 +38,7 @@ class CMS extends BaseEntity {
     }
 
     public function getObject($language){
-        if (count(Config::get('cms.LANGUAGE')) == 1){
-            return $this;
-        }
-        if (empty($language)) $language = Config::get('cms.LANGUAGE')[0];
-        if (empty($this->id)) return [];
-
-        $content = $this->contents()->where('language', $language)->first();
-        if (empty($content)) {
-            $content = new CMSContent(['language'=>$language, CodingConstant::ConvertCase('cms_id')=>$this->id]);
-            $content->save();
-        }
-        return $content;
+        return $this;
     }
 
     public function saveContent($language, $json){
@@ -82,6 +71,7 @@ class CMS extends BaseEntity {
     public function getValue($key, $listItem, $language){
         if (!empty($language)) {
             $json = $this->getContent($language);
+            $key .= '_'.$language;
 
             if (empty($listItem)) return @$json->$key;
             else return @$listItem->$key;

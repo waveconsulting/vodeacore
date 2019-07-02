@@ -294,7 +294,7 @@
 
                 var autonumericOptions = {
                     digitGroupSeparator: '.',
-                    decimalPlacesOverride:0,
+                    decimalPlacesOverride: 2,
                     decimalCharacter  : ',',
                     unformatOnSubmit : true
                 };

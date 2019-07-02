@@ -22,6 +22,20 @@ body {
   font-size: 12px;
 }
 
+.nav-custom-pills {
+  margin-bottom: 20px;
+}
+.nav-custom-pills .nav-item .nav-link {
+  background: transparent;
+  border-bottom: 2px solid;
+  border-color: transparent;
+  border-radius: 0px;
+  transition: all 0.5s ease;
+}
+.nav-custom-pills .nav-item .nav-link.active, .nav-custom-pills .nav-item .nav-link:hover {
+  border-color: black;
+}
+
 .input-group-prepend {
   height: 100%;
 }

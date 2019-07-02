@@ -28,6 +28,25 @@ body {
   font-size: 12px;
 }
 
+.nav-custom-pills {
+  margin-bottom: 20px;
+
+  .nav-item {
+
+    .nav-link {
+      background: transparent;
+      border-bottom: 2px solid;
+      border-color: transparent;
+      border-radius: 0px;
+      transition: all 0.5s ease;
+
+      &.active, &:hover {
+        border-color: black;
+      }
+    }
+  }
+}
+
 .input-group-prepend {
   height: 100%;
 }

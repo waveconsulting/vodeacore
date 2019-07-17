@@ -28,6 +28,36 @@ body {
   font-size: 12px;
 }
 
+.d-none {
+  display: none !important;
+}
+
+.full-width {
+  width: 100% !important;
+}
+
+.width-100 {
+  width: 100% !important;
+}
+
+.width-75 {
+  width: 75% !important;
+}
+
+.width-50 {
+  width: 50% !important;
+}
+
+.width-25 {
+  width: 25% !important;
+}
+
+.tab-content {
+  padding: 20px;
+  border: 1px solid #dee2e6;
+  border-top: none;
+}
+
 .nav-custom-pills {
   margin-bottom: 20px;
 
@@ -172,21 +202,19 @@ body {
 // custom table
 .table {
 
-  thead {
-    th {
-      height: 20px;
-      padding: 10px;
-    }
-  }
-
-  td {
+  tbody td, thead th {
     height: 20px;
-    padding: 10px;
-    white-space: unset;
+    padding: 5px 15px;
+    font-size: 12px;
   }
 
   .action-wrapper {
     white-space: nowrap;
+
+    .btn {
+      padding: 0.1rem 1rem;
+      vertical-align: top;
+    }
   }
 }
 
@@ -262,8 +290,11 @@ body {
 
 // select custom
 .select-wrapper {
+  width: 50%;
+
   .select2-container {
     display: block;
+    width: 100% !important;
 
     .select2-search--inline {
       height: 20px;
@@ -615,6 +646,7 @@ body {
     display: block;
     height: 22.5px;
     width: 22.5px;
+    transition: all 0.5s ease;
 
     &:after {
       top: 50%;
@@ -666,11 +698,11 @@ body {
 
     .checker {
       background-color: transparent;
-      border: 2px solid #eaeaea;
-      border-radius: 5px;
-      width: 22.5px;
-      height: 22.5px;
-      background: white;
+      border: 1.5px solid #bbbbbb;
+      border-radius: 2px;
+      width: 17px;
+      height: 17px;
+      background: transparent;
 
       &:after {
         content: '\f00c';
@@ -684,11 +716,7 @@ body {
     &:hover {
 
       .checker {
-        border-color: black;
-
-        &.blue-style {
-          border-color: black;
-        }
+        border-color: #14aa75;
       }
 
     }
@@ -697,13 +725,8 @@ body {
 
       &:checked, &.indeterminate {
         ~ .checker {
-          border-color: black;
-          background: black;
-
-          &.blue-style {
-            border-color: black;
-            background: black;
-          }
+          border-color: #14aa75;
+          background: #14aa75;
 
           &:after {
             display: block;
@@ -805,3 +828,23 @@ body {
   }
 }
 // end field amount
+
+
+// modal
+.modal {
+  .modal-dialog {
+
+    .modal-content {
+
+      .modal-header, .modal-body, .modal-footer {
+        padding: 15px;
+      }
+    }
+  }
+}
+
+.modal-md {
+  max-width: 650px;
+  margin: 30px auto;
+}
+// end modal

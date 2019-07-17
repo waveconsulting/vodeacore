@@ -126,8 +126,8 @@
                             </div>
                         </div>
                     </a>--}}
-                    <a class="dropdown-item"> Manage Accounts </a>
-                    <a class="dropdown-item"> Change Password </a>
+                    <a class="dropdown-item" href="{!! route('admin.manage-account') !!}"> Manage Accounts </a>
+                    <a class="dropdown-item" href="{!! route('admin.change-password') !!}"> Change Password </a>
                     {{--<a class="dropdown-item"> Check Inbox </a>--}}
                     <a class="dropdown-item" href="{!! route('admin.logout') !!}"> Sign Out </a>
                 </div>

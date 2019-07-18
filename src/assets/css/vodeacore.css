@@ -22,10 +22,6 @@ body {
   font-size: 12px;
 }
 
-.d-none {
-  display: none !important;
-}
-
 .full-width {
   width: 100% !important;
 }

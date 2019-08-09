@@ -92,14 +92,15 @@
         initAllElement();
 
         // Submit Button
-        $('button[type=submit]').click(function () {
-            var btn =  $(this).ladda();
-
+        $('button[type="submit"]').click(function () {
             var form = $(this).parents('form');
 
             if ($(form).valid()) {
+                var btn = $(this).ladda();
                 btn.ladda('start');
                 form.submit();
+            } else {
+
             }
         });
         // End Submit Button
@@ -311,6 +312,19 @@
 
         }
 
+        // default modal confirmation
+        $('.btn-default-confirmation').click(function (e) {
+            e.preventDefault();
+            var modalConfirmation = $('#modal-default-confirmation');
+            var dataHref = $(this).data('href');
+
+            modalConfirmation.find('.btn-submit').attr('href', dataHref);
+
+            modalConfirmation.modal({
+                backdrop: 'static'
+            });
+        })
+        // end default modal confirmation
 
     });
 })(jQuery);

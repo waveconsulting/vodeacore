@@ -44,7 +44,7 @@ class VodeaCore extends Facade
 		$className = strtolower($className);
 
 		if (empty($path)) $path = '/' . $className . '/search';
-		if (empty($routeName)) $routeName = 'admin.' . $className . '.autocomplete';
+		if (empty($routeName)) $routeName = $className . '.autocomplete';
 
 		if (empty($controller)){
 			Route::any($path, function() use($class){ return ComponentService::AutoCompleteSearch($class); })->name($routeName);

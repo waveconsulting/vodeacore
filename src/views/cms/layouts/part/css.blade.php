@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="{!! url('/') !!}/assets/vodea/vodeacore/css/master.css">
 <!-- endinject -->
 <!-- Layout styles -->
+<link rel="stylesheet" href="{!! url('/') !!}/assets/vodea/vodeacore/css/custom-bootstrap-margin-padding.css">
 <link rel="stylesheet" href="{!! url('/') !!}/assets/vodea/vodeacore/css/style.css">
 <link rel="stylesheet" href="{!! url('/') !!}/assets/vodea/vodeacore/css/vodeacore.css">
 <!-- End Layout styles -->

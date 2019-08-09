@@ -23,6 +23,7 @@
 <!-- Custom js for this page-->
 <script src="{!! url('/') !!}/assets/vodea/vodeacore/js/dashboard.js"></script>
 
+<script src="{!! url('/') !!}/assets/vodea/vodeacore/js/form-engine.autocomplete.js"></script>
 <script src="{!! url('/') !!}/assets/vodea/vodeacore/js/form-engine.js"></script>
 <!-- End custom js for this page-->
 

@@ -91,6 +91,14 @@ function getProductionNoPhoto(){
     return env('APP_URL') . '/assets/admin/images/broken-image.png';
 }
 
+function GetFileURL($filename){
+    if(empty($filename)) return '';
+
+    if (!File::exists( public_path(env('UPLOAD_FILE')) . $filename ) ) return '';
+
+    return url(env('UPLOAD_FILE')).'/'.$filename;
+}
+
 function isActiveRoute($arrayRouteName){
     foreach($arrayRouteName as $routeName){
         if(Request::url() == route($routeName)){

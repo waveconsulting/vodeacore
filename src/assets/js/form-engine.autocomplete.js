@@ -16,6 +16,9 @@ function initAutoComplete(){
 		var exceptionIds = [];
 		var exceptionName = $(this).data('exception');
 
+		var dataCustom = JSON.stringify($(this).data('custom'));
+		dataCustom = JSON.parse(dataCustom);
+
 		var url = $(this).data('url');
 		var limit = $(this).data('limit');
 		if (!limit){
@@ -38,6 +41,10 @@ function initAutoComplete(){
 							return exceptionIds;
 						}
 					}
+
+					$.each(dataCustom, function (key, item) {
+						query[item] = $(`[name=${item}]`).val()
+					});
 
 					return query;
 				},

@@ -615,14 +615,26 @@ body {
   display: none !important;
 }
 
-.input-group .file-change {
-  cursor: pointer;
-  transition: all 0.5s ease;
-  background-color: #ff4e4e;
-  color: white;
-  padding: 0px 12px;
-  @extend .display-flex;
-  align-items: center;
+.input-group {
+
+  .file-change, .open-file {
+    cursor: pointer;
+    transition: all 0.5s ease;
+    color: white;
+    padding: 0px 12px;
+    @extend .display-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .file-change {
+    background-color: #ff6161;
+  }
+
+  .open-file {
+    background-color: #14aa75;
+    margin-left: 15px;
+  }
 }
 
 .custom-input {

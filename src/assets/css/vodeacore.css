@@ -1,5 +1,5 @@
 @charset "UTF-8";
-.display-flex, .input-group .file-change, .image-section, .range-wrapper, .card .card-header, .footer .footer-inline {
+.display-flex, .input-group .file-change, .input-group .open-file, .image-section, .range-wrapper, .card .card-header, .footer .footer-inline {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -451,13 +451,20 @@ body {
   display: none !important;
 }
 
-.input-group .file-change {
+.input-group .file-change, .input-group .open-file {
   cursor: pointer;
   transition: all 0.5s ease;
-  background-color: #ff4e4e;
   color: white;
   padding: 0px 12px;
   align-items: center;
+  text-decoration: none;
+}
+.input-group .file-change {
+  background-color: #ff6161;
+}
+.input-group .open-file {
+  background-color: #14aa75;
+  margin-left: 15px;
 }
 
 .custom-input {

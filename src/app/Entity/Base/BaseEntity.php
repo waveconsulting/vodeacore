@@ -25,6 +25,7 @@ class BaseEntity extends Authenticatable {
 
     const FORM_LABEL = [];
     const FORM_LABEL_HELP = [];
+    const FORM_PLACEHOLDER = [];
     const FORM_TYPE = [];
     const FORM_TYPE_REMOVE = [];
     const FORM_IMAGE_TYPE = [];
@@ -125,6 +126,16 @@ class BaseEntity extends Authenticatable {
         if (isset($helps[$key])) return $helps[$key];
 
         return '';
+    }
+    public static function placeholder($key){
+        $formLabel = static::FORM_LABEL;
+        $formPlaceholder = static::FORM_PLACEHOLDER;
+
+        if (isset($formLabel[$key])) return $formLabel[$key];
+        if (isset($formPlaceholder[$key])) return $formPlaceholder[$key];
+
+        $label = keyToLabel($key);
+        return $label;
     }
     public function formType($key){
         $types = $this::FORM_TYPE;

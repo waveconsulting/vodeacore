@@ -82,7 +82,7 @@ class CRUDService {
                 }else {
                     $json[$formName] = json_encode($data[$formName]);
                 }
-			} else if ($formType == 'DateRange' || $formType == 'TimeRange') {
+			} else if ($formType == 'DateRange' || $formType == 'TimeRange' || $formType == 'NumberRange') {
 				$json[$formName.'From'] = static::updateData((array)$json, $data, $formType, $formName.'From', $model);
 				$json[$formName.'To'] = static::updateData((array)$json, $data, $formType, $formName.'To', $model);
 			} else {

@@ -89,6 +89,15 @@
 
     $(function () {
 
+        // Submenu Dropdown
+        $('.submenu-dropdown').click(function () {
+            $(this).attr('aria-expanded', function (i, attr) {
+                return attr == 'true' ? 'false' : 'true';
+            });
+            $(this).next().toggleClass('show');
+        });
+        // End Submenu Dropdown
+
         initAllElement();
 
         // Submit Button

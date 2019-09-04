@@ -155,6 +155,13 @@
 @include('cms::layouts.part.modal')
 @yield('modalCustom')
 
+<script>
+    var mainUrl = '{{ url('/') }}';
+    var fullImgURL = mainUrl + '/assets/upload/full/';
+    var mdImgURL = mainUrl + '/assets/upload/md/';
+    var fileUrl = mainUrl + '/assets/upload/file/';
+</script>
+
 @include('cms::layouts.part.js')
 @yield('jsCustom')
 

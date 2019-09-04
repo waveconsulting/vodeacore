@@ -39,8 +39,8 @@ function initAutoComplete(){
 							}
 
 							return exceptionIds;
-						}
-					}
+						},
+					};
 
 					$.each(dataCustom, function (key, item) {
 						query[item] = $(`[name=${item}]`).val()
@@ -72,6 +72,7 @@ function initAutoComplete(){
 		$(this).select2(options).on('select2:select', function(){
 			var self = $(this);
 			window[onSelectFunction]($(this).select2('data')[0], self);
+			$(this).val(0).trigger('change');
 		});
 	});
 }

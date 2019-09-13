@@ -320,23 +320,22 @@
             // AutoNumeric
 
         }
-
-        // default modal confirmation
-        $('.btn-default-confirmation').click(function (e) {
-            e.preventDefault();
-            var modalConfirmation = $('#modal-default-confirmation');
-            var dataHref = $(this).data('href');
-
-            modalConfirmation.find('.btn-submit').attr('href', dataHref);
-
-            modalConfirmation.modal({
-                backdrop: 'static'
-            });
-        })
-        // end default modal confirmation
-
     });
 })(jQuery);
+
+// default modal confirmation
+$(document).on('click','.btn-default-confirmation', function(e){
+    e.preventDefault();
+    var modalConfirmation = $('#modal-default-confirmation');
+    var dataHref = $(this).data('href');
+
+    modalConfirmation.find('.btn-submit').attr('href', dataHref);
+
+    modalConfirmation.modal({
+        backdrop: 'static'
+    });
+});
+// end default modal confirmation
 
 showNotification = function(type, title, message, position) {
     'use strict';

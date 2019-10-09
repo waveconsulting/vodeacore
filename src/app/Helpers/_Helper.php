@@ -149,4 +149,12 @@ function getMenuConfig() {
     return $menuList;
 }
 
+function checkAccessSidebarCore($access, $roles) {
+    if (!isset($access)) return true;
+
+    if(array_intersect($access, $roles)) return true;
+
+    return false;
+}
+
 ?>

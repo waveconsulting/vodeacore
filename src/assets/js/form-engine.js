@@ -139,7 +139,10 @@
 
         // Data Table
         $('.datatable').DataTable({
-            "ordering": false,
+            "order": [],
+            stateLoadParams: function(settings, data ) {
+                if (data.order) delete data.order;
+            },
             "aLengthMenu": [
                 [5, 10, 15, -1],
                 [5, 10, 15, "All"]
@@ -147,7 +150,8 @@
             "iDisplayLength": 10,
             "language": {
                 search: ""
-            }
+            },
+            stateSave: true
         });
 
         $('.datatable').each(function () {

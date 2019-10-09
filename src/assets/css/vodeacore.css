@@ -166,10 +166,14 @@ body {
   font-size: 12px;
 }
 
-.table tbody td, .table thead th {
+.table tbody td, .table thead th, .table tfoot th {
   height: 20px;
   padding: 5px 15px;
   font-size: 12px;
+}
+.table tfoot th {
+  background: lightgrey;
+  border: none;
 }
 .table .action-wrapper {
   white-space: nowrap;

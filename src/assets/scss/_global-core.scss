@@ -209,10 +209,15 @@ body {
 // custom table
 .table {
 
-  tbody td, thead th {
+  tbody td, thead th, tfoot th {
     height: 20px;
     padding: 5px 15px;
     font-size: 12px;
+  }
+
+  tfoot th {
+    background: lightgrey;
+    border: none;
   }
 
   .action-wrapper {

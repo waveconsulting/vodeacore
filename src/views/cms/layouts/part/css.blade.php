@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="{!! url('/') !!}/assets/vodea/vodeacore/vendors/iconfonts/font-awesome/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="{!! url('/') !!}/assets/vodea/vodeacore/vendors/ladda/css/ladda-themeless.min.css">
+
+<link rel="stylesheet" href="{!! url('/') !!}/assets/vodea/vodeacore/vendors/chartjs/Chart.min.css">
 <!-- End plugin css for this page -->
 <!-- inject:css -->
 <link rel="stylesheet" href="{!! url('/') !!}/assets/vodea/vodeacore/css/master.css">

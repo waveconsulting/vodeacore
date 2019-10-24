@@ -11,6 +11,8 @@
 <script src="{!! url('/') !!}/assets/vodea/vodeacore/vendors/ladda/js/ladda.min.js"></script>
 
 <script src="{!! url('/') !!}/assets/vodea/vodeacore/vendors/autonumeric/autoNumeric.min.js"></script>
+
+<script src="{!! url('/') !!}/assets/vodea/vodeacore/vendors/chartjs/Chart.bundle.min.js"></script>
 <!-- End plugin js for this page-->
 
 <!-- inject:js -->

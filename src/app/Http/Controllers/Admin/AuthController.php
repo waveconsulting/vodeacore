@@ -4,6 +4,7 @@ namespace App\Http\Controllers\VodeaCore\Admin;
 
 use App\Entity\User\Admin;
 use App\Http\Controllers\VodeaCore\Controller;
+use App\Service\VodeaCore\NotificationService;
 use App\Util\VodeaCore\Constant;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -24,15 +25,20 @@ class AuthController extends Controller {
 
         if ($admin == null){
 
-            return Redirect::back()->withErrors('Username / password salah, mohon ulang kembali.');
+            $notification = NotificationService::DefaultNotification('warning', 'Username / password salah, mohon ulang kembali.');
+
+            return redirect()->back()->with('notification', $notification);
         } else if ($admin->status != Constant::STATUS_ACTIVE){
 
-            return Redirect::back()->withErrors(['Akun belum terverifikasi, silahkan verifikasi terlebih dahulu.']);
+            $notification = NotificationService::DefaultNotification('warning', 'Akun belum terverifikasi, silahkan verifikasi terlebih dahulu.');
+
+            return redirect()->back()->with('notification', $notification);
         }
 
         if(!\Auth::attempt(['email' => $input->email, 'password' => $input->password])){
+            $notification = NotificationService::DefaultNotification('warning', 'Username / password salah, mohon ulang kembali.');
 
-            return Redirect::back()->withErrors(['Username / password salah, mohon ulang kembali.']);
+            return redirect()->back()->with('notification', $notification);
         }
 
         return redirect()->route('admin.dashboard');

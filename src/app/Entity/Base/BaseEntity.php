@@ -186,10 +186,12 @@ class BaseEntity extends Authenticatable {
             if (static::formType($key) == 'ListSortable'){
                 $list = json_decode(@$this->$key);
 
-                foreach ($list as $idx => $items) {
-                    foreach ($items as $i => $value) {
-                        if (substr(@$value,0,1) == '[' && substr(@$value,-1) == ']') {
-                            $items->$i = json_decode(@$value);
+                if (isset($list)) {
+                    foreach ($list as $idx => $items) {
+                        foreach ($items as $i => $value) {
+                            if (substr(@$value,0,1) == '[' && substr(@$value,-1) == ']') {
+                                $items->$i = json_decode(@$value);
+                            }
                         }
                     }
                 }

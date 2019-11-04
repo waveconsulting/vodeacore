@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	initAutoComplete();
-
 });
 
 function initAutoComplete(){
@@ -16,8 +15,12 @@ function initAutoComplete(){
 		var exceptionIds = [];
 		var exceptionName = $(this).data('exception');
 
-		var dataCustom = JSON.stringify($(this).data('custom'));
-		dataCustom = JSON.parse(dataCustom);
+		var dataCustom = [];
+
+		if ($(this).data('custom') != undefined) {
+			dataCustom = JSON.stringify($(this).data('custom'));
+			dataCustom = JSON.parse(dataCustom);
+		}
 
 		var url = $(this).data('url');
 		var limit = $(this).data('limit');

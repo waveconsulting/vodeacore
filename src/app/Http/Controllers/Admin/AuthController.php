@@ -19,16 +19,14 @@ class AuthController extends Controller {
     public function submitLogin() {
         $input = (object)Input::all();
 
-        if (\Auth::isAdmin()) return redirect()->route('admin.dashboard');
-
         $admin = Admin::where('email', $input->email)->with('roles')->first();
 
-        if ($admin == null){
+        if ($admin == null) {
 
             $notification = NotificationService::DefaultNotification('warning', 'Username / password salah, mohon ulang kembali.');
 
             return redirect()->back()->with('notification', $notification);
-        } else if ($admin->status != Constant::STATUS_ACTIVE){
+        } else if ($admin->status != Constant::STATUS_ACTIVE) {
 
             $notification = NotificationService::DefaultNotification('warning', 'Akun belum terverifikasi, silahkan verifikasi terlebih dahulu.');
 

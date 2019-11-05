@@ -25,8 +25,10 @@
 <!-- Custom js for this page-->
 @js(/assets/vodea/vodeacore/js/dashboard.js)
 
+@js(/assets/vodea/vodeacore/js/util.js)
 @js(/assets/vodea/vodeacore/js/form-engine.autocomplete.js)
 @js(/assets/vodea/vodeacore/js/form-engine.js)
+@js(/assets/vodea/vodeacore/js/datatable.js)
 <!-- End custom js for this page-->
 
 

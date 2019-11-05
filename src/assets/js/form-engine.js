@@ -138,7 +138,7 @@
 
 
         // Data Table
-        $('.datatable').DataTable({
+        /*$('.datatable').DataTable({
             "order": [],
             stateLoadParams: function(settings, data ) {
                 if (data.order) delete data.order;
@@ -163,7 +163,7 @@
             // LENGTH - Inline-Form control
             var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
             length_sel.removeClass('form-control-sm');
-        });
+        });*/
         // End Data Table
 
 
@@ -215,117 +215,116 @@
                 panel.remove();
             })
         }
-
-
-        function initAllElement() {
-
-            // Text Editor
-            if ($(".text-editor").length) {
-                tinymce.init({
-                    selector: '.text-editor',
-                    height: 500,
-                    resize: true,
-                    theme: 'modern',
-                    menubar:false,
-                    branding: false,
-                    plugins: [
-                        'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                        'searchreplace wordcount visualblocks visualchars code fullscreen',
-                        'insertdatetime media nonbreaking save table contextmenu directionality',
-                        'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help'
-                    ],
-                    toolbar1: 'undo redo | insert | styleselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | help',
-                    image_advtab: true,
-                    content_css: []
-                });
-            }
-            // End Text Editor
-
-            // Select 2
-            if ($('.select-custom').length) {
-                $('.select-custom').select2();
-            }
-            // End Select 2
-
-
-            // Timepicker
-            if ($(".timepicker").length) {
-                $('.timepicker').datetimepicker({
-                    format: 'HH:mm',
-                });
-            }
-            // End Timepicker
-
-
-            // Color Picker
-            if ($(".color-picker").length) {
-                $('.color-picker').asColorPicker();
-            }
-            // End Color Picker
-
-
-            // Rating Picker
-            $('.rating-picker').barrating('show', {
-                theme: 'bars-1to10'
-            });
-            // End Rating Picker
-
-            // Datepicker
-            if ($('.datepicker').length) {
-                $('.datepicker').datepicker({
-                    todayBtn: "linked",
-                    enableOnReadonly: true,
-                    todayHighlight: true,
-                    toggleActive: true,
-                    format: "yyyy-mm-dd",
-                });
-            }
-            // End Datepicker
-
-            // Image Upload
-            if ($('.btn-upload').length) {
-                $('.btn-upload').each(function () {
-                    $(this).off();
-                    addUploadDeleteFunction($(this));
-                });
-            }
-            // End Image Upload
-            
-            // File Input
-            $('.file-change').click(function (e) {
-                e.preventDefault();
-
-                $(this).parent().find('[type=hidden]').val('DELETE_FILE');
-
-                $(this).parent().toggleClass('hide');
-                $(this).parent().next().toggleClass('hide');
-            })
-            // File Input
-
-            // AutoNumeric
-            if ($('.autonumeric').length) {
-                $('.autonumeric').off();
-
-                var autonumericOptions = {
-                    digitGroupSeparator: '.',
-                    decimalPlacesOverride: 2,
-                    decimalCharacter  : ',',
-                    unformatOnSubmit : true
-                };
-
-                $('.autonumeric').each(function () {
-                    $(this).autoNumeric('init', autonumericOptions);
-                })
-
-                $('.autonumeric').change(function(){
-                    $(this).parent().find('.autonumericvalue').first().val( $(this).autoNumeric('get') );
-                })
-            }
-            // AutoNumeric
-
-        }
     });
 })(jQuery);
+
+function initAllElement() {
+
+    // Text Editor
+    if ($(".text-editor").length) {
+        tinymce.init({
+            selector: '.text-editor',
+            height: 500,
+            resize: true,
+            theme: 'modern',
+            menubar:false,
+            branding: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help'
+            ],
+            toolbar1: 'undo redo | insert | styleselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | help',
+            image_advtab: true,
+            content_css: []
+        });
+    }
+    // End Text Editor
+
+    // Select 2
+    if ($('.select-custom').length) {
+        $('.select-custom').select2();
+    }
+    // End Select 2
+
+
+    // Timepicker
+    if ($(".timepicker").length) {
+        $('.timepicker').datetimepicker({
+            format: 'HH:mm',
+        });
+    }
+    // End Timepicker
+
+
+    // Color Picker
+    if ($(".color-picker").length) {
+        $('.color-picker').asColorPicker();
+    }
+    // End Color Picker
+
+
+    // Rating Picker
+    $('.rating-picker').barrating('show', {
+        theme: 'bars-1to10'
+    });
+    // End Rating Picker
+
+    // Datepicker
+    if ($('.datepicker').length) {
+        $('.datepicker').datepicker({
+            todayBtn: "linked",
+            enableOnReadonly: true,
+            todayHighlight: true,
+            toggleActive: true,
+            format: "yyyy-mm-dd",
+        });
+    }
+    // End Datepicker
+
+    // Image Upload
+    if ($('.btn-upload').length) {
+        $('.btn-upload').each(function () {
+            $(this).off();
+            addUploadDeleteFunction($(this));
+        });
+    }
+    // End Image Upload
+
+    // File Input
+    $('.file-change').click(function (e) {
+        e.preventDefault();
+
+        $(this).parent().find('[type=hidden]').val('DELETE_FILE');
+
+        $(this).parent().toggleClass('hide');
+        $(this).parent().next().toggleClass('hide');
+    })
+    // File Input
+
+    // AutoNumeric
+    if ($('.autonumeric').length) {
+        $('.autonumeric').off();
+
+        var autonumericOptions = {
+            digitGroupSeparator: '.',
+            decimalPlacesOverride: 2,
+            decimalCharacter  : ',',
+            unformatOnSubmit : true
+        };
+
+        $('.autonumeric').each(function () {
+            $(this).autoNumeric('init', autonumericOptions);
+        })
+
+        $('.autonumeric').change(function(){
+            $(this).parent().find('.autonumericvalue').first().val( $(this).autoNumeric('get') );
+        })
+    }
+    // AutoNumeric
+
+}
 
 // default modal confirmation
 $(document).on('click','.btn-default-confirmation', function(e){

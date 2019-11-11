@@ -17,52 +17,52 @@ use Illuminate\Support\Facades\Route;
 
 class VodeaCore extends Facade
 {
-	/**
-	 * Get the registered name of the component.
-	 *
-	 * @return string
-	 */
-	protected static function getFacadeAccessor(){
-		return 'vodea.vodeacore';
-	}
+    /**
+     * Get the registered name of the component.
+     *
+     * @return string
+     */
+    protected static function getFacadeAccessor(){
+        return 'vodea.vodeacore';
+    }
 
-	public static function CRUDRoute($single, $plural = '', $routeEnable = []) {
-		if (empty($plural)) $plural = $single.'s';
-		if (count($routeEnable) != 5) $routeEnable = [true, true, true, true, true];
-		$controller = 'Admin\\'.ucfirst($single).'Controller';
+    public static function CRUDRoute($single, $plural = '', $routeEnable = []) {
+        if (empty($plural)) $plural = $single.'s';
+        if (count($routeEnable) != 5) $routeEnable = [true, true, true, true, true];
+        $controller = 'Admin\\'.ucfirst($single).'Controller';
 
-		if($routeEnable[0]) Route::get('/'.$plural, $controller.'@index')->name($single.'.list');
-		if($routeEnable[1]) Route::get('/'.$single.'/{id?}', $controller.'@details')->name($single.'.details');
-		if($routeEnable[2]) Route::post('/'.$single.'/{id?}', $controller.'@save')->name($single.'.save');
-		if($routeEnable[3]) Route::get('/'.$single.'/delete/{id?}', $controller.'@delete')->name($single.'.delete');
-		if($routeEnable[4]) Route::post('/'.$plural, $controller.'@indexData')->name('admin.'.$plural.'Data');
-	}
+        if($routeEnable[0]) Route::get('/'.$plural, $controller.'@index')->name($single.'.list');
+        if($routeEnable[1]) Route::get('/'.$single.'/{id?}', $controller.'@details')->name($single.'.details');
+        if($routeEnable[2]) Route::post('/'.$single.'/{id?}', $controller.'@save')->name($single.'.save');
+        if($routeEnable[3]) Route::get('/'.$single.'/delete/{id?}', $controller.'@delete')->name($single.'.delete');
+        if($routeEnable[4]) Route::post('/'.$plural, $controller.'@indexData')->name($single.'.ajaxList');
+    }
 
-	public static function AutoComplete($class, $path = '', $controller = '', $routeName = '') {
-		$className = explode('\\', $class);
-		$className = $className[count($className) - 1];
-		$className = strtolower($className);
+    public static function AutoComplete($class, $path = '', $controller = '', $routeName = '') {
+        $className = explode('\\', $class);
+        $className = $className[count($className) - 1];
+        $className = strtolower($className);
 
-		if (empty($path)) $path = '/' . $className . '/search';
-		if (empty($routeName)) $routeName = $className . '.autocomplete';
+        if (empty($path)) $path = '/' . $className . '/search';
+        if (empty($routeName)) $routeName = $className . '.autocomplete';
 
-		if (empty($controller)){
-			Route::any($path, function() use($class){ return ComponentService::AutoCompleteSearch($class); })->name($routeName);
-		} else {
-			Route::any($path, $controller)->name($routeName);
-		}
-	}
+        if (empty($controller)){
+            Route::any($path, function() use($class){ return ComponentService::AutoCompleteSearch($class); })->name($routeName);
+        } else {
+            Route::any($path, $controller)->name($routeName);
+        }
+    }
 
-	public static function GaRoute() {
-		Route::any('ga/ajax/sessions', 'VodeaCore\Admin\GoogleAnalyticController@ajaxSessions')->name('admin.ga.ajaxSessions');
-		Route::any('ga/ajax/users', 'VodeaCore\Admin\GoogleAnalyticController@ajaxUsers')->name('admin.ga.ajaxUsers');
-	}
+    public static function GaRoute() {
+        Route::any('ga/ajax/sessions', 'VodeaCore\Admin\GoogleAnalyticController@ajaxSessions')->name('admin.ga.ajaxSessions');
+        Route::any('ga/ajax/users', 'VodeaCore\Admin\GoogleAnalyticController@ajaxUsers')->name('admin.ga.ajaxUsers');
+    }
 
-	public static function Notification() {
-		Route::get('notification/my/list',  'VodeaCore\Admin\NotificationController@index')->name('admin.notification.my.list');
-		Route::get('notification/my/badge/{type}',  'VodeaCore\Admin\NotificationController@badge')->name('admin.notification.my.badge');
-		Route::get('notification/my/readall',  'VodeaCore\Admin\NotificationController@readAll')->name('admin.notification.my.readall');
-		Route::get('notification/my/topic/{notificationId}',  'VodeaCore\Admin\NotificationController@topic')->name('admin.notification.my.topic');
-	}
+    public static function Notification() {
+        Route::get('notification/my/list',  'VodeaCore\Admin\NotificationController@index')->name('admin.notification.my.list');
+        Route::get('notification/my/badge/{type}',  'VodeaCore\Admin\NotificationController@badge')->name('admin.notification.my.badge');
+        Route::get('notification/my/readall',  'VodeaCore\Admin\NotificationController@readAll')->name('admin.notification.my.readall');
+        Route::get('notification/my/topic/{notificationId}',  'VodeaCore\Admin\NotificationController@topic')->name('admin.notification.my.topic');
+    }
 
 }

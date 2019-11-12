@@ -3,90 +3,6 @@
 (function ($) {
     'use strict';
 
-    function showImage(src, target) {
-        if (src == null || target == null) return;
-        var fr = new FileReader();
-        // when image is loaded, set the src of the image where you want to display it
-        fr.onload = function (e) {
-            target.src = this.result;
-        };
-        src.addEventListener("change", function () {
-            // fill fr with image data
-
-            if (src.files.length > 0){
-                if (src.files[0].size > $(src).data('image-limit')){
-                    $(src).val('');
-                    iziModalError('The file size exceeds the limit allowed of '+$(src).data('image-limit'));
-                    return;
-                }
-            };
-            if ($(src).attr('name') == '' || !$(src).attr('name')) {
-                var hidden = $(src).parent().find('input[type=hidden]').first();
-                $(src).attr('name', hidden.attr('name'));
-                hidden.remove();
-            }
-            triggerImageMultipleWrapper(src);
-
-            fr.readAsDataURL(src.files[0]);
-        });
-    }
-    function triggerImageMultipleWrapper(src) {
-        var imageMultipleWrapper = $(src).parent().parent();
-        if (imageMultipleWrapper.hasClass('image-multiple-wrapper')) {
-            var imageSelectorWrapperLast = imageMultipleWrapper.find('.image-selector-wrapper').last();
-
-            if ($(src).parent().index() == ( imageMultipleWrapper.find('.image-selector-wrapper').length - 1)) {
-                imageMultipleWrapper.append(imageSelectorWrapperLast.clone(true));
-            }
-
-            var imageSelectorWrapperFirst = imageMultipleWrapper.find('.image-selector-wrapper').first();
-            imageSelectorWrapperLast = imageMultipleWrapper.find('.image-selector-wrapper').last();
-            imageSelectorWrapperLast.html(imageSelectorWrapperLast.html());
-            imageSelectorWrapperLast.find('> .image-delete-icon').first().hide();
-
-            addUploadDeleteFunction(imageSelectorWrapperLast.find('.btn-upload').first());
-            var btnUploadFile = $(imageMultipleWrapper.find('.image-selector-wrapper').get(imageMultipleWrapper.find('.image-selector-wrapper').length - 1)).find('.btn-upload-file').first();
-
-            var name = imageSelectorWrapperFirst.find('[name]').first().attr('name');
-            var newIndex = (imageMultipleWrapper.find('.image-selector-wrapper').length - 1);
-
-            if (name.slice(-1) == ']'){
-                name = name.substring(0, name.length - 2) + newIndex + ']';
-            } else {
-                name = name.substring(0, name.length - 1) + newIndex;
-            }
-            btnUploadFile.attr('name', name);
-        }
-        $(src).parent().find('> button > .upload-section').hide();
-        $(src).parent().find('> .image-delete-icon').show();
-    }
-    function addUploadDeleteFunction(uploadButton) {
-        uploadButton.click(function () {
-            $(this).parent().find('input.btn-upload-file').first().click();
-        });
-        var fileElement = uploadButton.parent().find('input.btn-upload-file').first()[0];
-        var imageElement = uploadButton.find('img').first()[0];
-        var uploadInstructionElement = uploadButton.find('div').first();
-        showImage(fileElement, imageElement);
-
-        //delete function
-        uploadButton.parent().find(' > .image-delete-icon').first().on('click', function () {
-            $(fileElement).val('');
-            $(imageElement).attr('src', '');
-            uploadInstructionElement.show();
-            $(this).hide();
-
-            var name = $(fileElement).attr('name');
-            if (name) {
-                uploadButton.parent().append('<input type="hidden" name="' + $(fileElement).attr('name') + '" value="DELETE_IMAGE">');
-                $(fileElement).attr('name', '');
-            } else {
-                uploadButton.parent().find('input[type=hidden]').first().val('DELETE_IMAGE');
-            }
-        });
-
-    }
-
     $(function () {
 
         // Submenu Dropdown
@@ -217,6 +133,90 @@
         }
     });
 })(jQuery);
+
+function showImage(src, target) {
+    if (src == null || target == null) return;
+    var fr = new FileReader();
+    // when image is loaded, set the src of the image where you want to display it
+    fr.onload = function (e) {
+        target.src = this.result;
+    };
+    src.addEventListener("change", function () {
+        // fill fr with image data
+
+        if (src.files.length > 0){
+            if (src.files[0].size > $(src).data('image-limit')){
+                $(src).val('');
+                iziModalError('The file size exceeds the limit allowed of '+$(src).data('image-limit'));
+                return;
+            }
+        };
+        if ($(src).attr('name') == '' || !$(src).attr('name')) {
+            var hidden = $(src).parent().find('input[type=hidden]').first();
+            $(src).attr('name', hidden.attr('name'));
+            hidden.remove();
+        }
+        triggerImageMultipleWrapper(src);
+
+        fr.readAsDataURL(src.files[0]);
+    });
+}
+function triggerImageMultipleWrapper(src) {
+    var imageMultipleWrapper = $(src).parent().parent();
+    if (imageMultipleWrapper.hasClass('image-multiple-wrapper')) {
+        var imageSelectorWrapperLast = imageMultipleWrapper.find('.image-selector-wrapper').last();
+
+        if ($(src).parent().index() == ( imageMultipleWrapper.find('.image-selector-wrapper').length - 1)) {
+            imageMultipleWrapper.append(imageSelectorWrapperLast.clone(true));
+        }
+
+        var imageSelectorWrapperFirst = imageMultipleWrapper.find('.image-selector-wrapper').first();
+        imageSelectorWrapperLast = imageMultipleWrapper.find('.image-selector-wrapper').last();
+        imageSelectorWrapperLast.html(imageSelectorWrapperLast.html());
+        imageSelectorWrapperLast.find('> .image-delete-icon').first().hide();
+
+        addUploadDeleteFunction(imageSelectorWrapperLast.find('.btn-upload').first());
+        var btnUploadFile = $(imageMultipleWrapper.find('.image-selector-wrapper').get(imageMultipleWrapper.find('.image-selector-wrapper').length - 1)).find('.btn-upload-file').first();
+
+        var name = imageSelectorWrapperFirst.find('[name]').first().attr('name');
+        var newIndex = (imageMultipleWrapper.find('.image-selector-wrapper').length - 1);
+
+        if (name.slice(-1) == ']'){
+            name = name.substring(0, name.length - 2) + newIndex + ']';
+        } else {
+            name = name.substring(0, name.length - 1) + newIndex;
+        }
+        btnUploadFile.attr('name', name);
+    }
+    $(src).parent().find('> button > .upload-section').hide();
+    $(src).parent().find('> .image-delete-icon').show();
+}
+function addUploadDeleteFunction(uploadButton) {
+    uploadButton.click(function () {
+        $(this).parent().find('input.btn-upload-file').first().click();
+    });
+    var fileElement = uploadButton.parent().find('input.btn-upload-file').first()[0];
+    var imageElement = uploadButton.find('img').first()[0];
+    var uploadInstructionElement = uploadButton.find('div').first();
+    showImage(fileElement, imageElement);
+
+    //delete function
+    uploadButton.parent().find(' > .image-delete-icon').first().on('click', function () {
+        $(fileElement).val('');
+        $(imageElement).attr('src', '');
+        uploadInstructionElement.show();
+        $(this).hide();
+
+        var name = $(fileElement).attr('name');
+        if (name) {
+            uploadButton.parent().append('<input type="hidden" name="' + $(fileElement).attr('name') + '" value="DELETE_IMAGE">');
+            $(fileElement).attr('name', '');
+        } else {
+            uploadButton.parent().find('input[type=hidden]').first().val('DELETE_IMAGE');
+        }
+    });
+
+}
 
 function initAllElement() {
 

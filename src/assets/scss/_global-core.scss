@@ -309,6 +309,10 @@ body {
     display: block;
     width: 100% !important;
 
+    &:nth-child(3) {
+      display: none;
+    }
+
     .select2-search--inline {
       height: 20px;
       line-height: 16px;

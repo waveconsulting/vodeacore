@@ -244,6 +244,9 @@ body {
   display: block;
   width: 100% !important;
 }
+.select-wrapper .select2-container:nth-child(3) {
+  display: none;
+}
 .select-wrapper .select2-container .select2-search--inline {
   height: 20px;
   line-height: 16px;

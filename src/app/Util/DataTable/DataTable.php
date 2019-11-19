@@ -5,7 +5,7 @@ namespace App\Util\VodeaCore\DataTable;
 use App\Blade\Util;
 use App\Util\VodeaCore\ResponseUtil;
 use Illuminate\Database\Query\Expression;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 class DataTable extends Datatables {
     public static function of($builder) {

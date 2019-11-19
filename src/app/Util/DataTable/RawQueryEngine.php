@@ -3,7 +3,7 @@
 namespace App\Util\VodeaCore\DataTable;
 
 use App\Service\VodeaCore\ExportService;
-use Yajra\Datatables\Request;
+use Yajra\DataTables\Request;
 
 class RawQueryEngine extends EloquentEngine {
 	public function __construct($model, Request $request) {

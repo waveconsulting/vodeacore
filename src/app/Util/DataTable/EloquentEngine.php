@@ -5,8 +5,9 @@ namespace App\Util\VodeaCore\DataTable;
 use App\Service\VodeaCore\ExportService;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Str;
+use Yajra\DataTables\EloquentDataTable;
 
-class EloquentEngine extends \Yajra\DataTables\EloquentDataTable {
+class EloquentEngine extends EloquentDataTable {
     protected $doPostAction;
     protected $doCustomOrQuery;
     protected $exludedSearchColumns = [];

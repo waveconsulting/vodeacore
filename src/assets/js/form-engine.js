@@ -327,8 +327,14 @@ function initAllElement() {
 }
 
 // default modal confirmation
+$(document).on('click', '.clickable-row', function(e) {
+    'use strict';
+    window.location = $(this).data('href');
+});
+
 $(document).on('click','.btn-default-confirmation', function(e){
-    e.preventDefault();
+    'use strict';
+    e.stopPropagation();
     var modalConfirmation = $('#modal-default-confirmation');
     var dataHref = $(this).data('href');
 

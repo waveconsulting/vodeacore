@@ -94,7 +94,7 @@ $(document).ready(function () {
 					}
 				});
 				if (filter.search == undefined) filter.search = {};
-				filter.search.value = self.closest('.card').find('.table-search input').val();
+				//filter.search.value = self.closest('.card').find('.table-search input').val();
 				return filter;
 			}
 
@@ -113,7 +113,7 @@ $(document).ready(function () {
 		}
 		var datatable = $(this).DataTable(dataTableOption).columns.adjust();
 
-		$(this).closest('.card').find('.table-search input').keyup(function() {
+		$(this).parents('.card').find('.ajax-filter').change(function() {
 			delay(function(){
 				datatable.ajax.reload();
 			}, 200 );

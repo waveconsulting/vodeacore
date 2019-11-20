@@ -308,6 +308,7 @@ function initAllElement() {
         $('.autonumeric').off();
 
         var autonumericOptions = {
+            vMax: '9999999999999',
             digitGroupSeparator: '.',
             decimalPlacesOverride: 2,
             decimalCharacter  : ',',

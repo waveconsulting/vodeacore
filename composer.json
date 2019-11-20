@@ -20,5 +20,16 @@
     },
     "extra":{
         "assets-dir" : "src\\assets"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi",
+            "@php artisan route:clear",
+            "@php artisan view:clear",
+            "@php artisan optimize:clear",
+            "@php artisan config:clear",
+            "@php artisan cache:clear"
+        ]
     }
 }

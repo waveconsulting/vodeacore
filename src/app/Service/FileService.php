@@ -4,6 +4,7 @@ namespace App\Service\VodeaCore;
 
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
+use Vodea\VodeaCore\app\Util\VodeaShortPixel;
 
 
 class FileService{
@@ -64,6 +65,11 @@ class FileService{
 
             File::move($uploadedFile->path(), $full_path);
 	        chmod($full_path, 0777);
+
+            if (!empty(env('SHORT_PIXEL_API_KEY', null))) {
+                $shortPixel = new VodeaShortPixel();
+                $shortPixel->fromFiles($full_path, $path);
+            }
         } catch (\Exception $e){
             \Log::error($e);
             return false;

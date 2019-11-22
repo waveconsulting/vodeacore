@@ -127,6 +127,7 @@ $(document).ready(function () {
 
 });
 
+
 function initTableButtonExport(type) {
 	$('.table-setting.table-setting-' + type).click(function() {
 		dataTableAction = type;

@@ -1,152 +1,214 @@
-var dataTableList = [];
-var dataTableOption = {};
-var dataTableAction = '';
+function convertDate(stringDate, format) {
+    if (!stringDate) {
+        return '-';
+    }
+
+    return moment(stringDate).format(format);
+}
+
+function convertNumber(value) {
+    if (!value) {
+        return 0;
+    }
+
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+function convertPrice(stringPrice, currency, withLabel = false) {
+    if (!stringPrice) {
+        stringPrice = '0';
+    }
+
+    let isMinus = isNaN(parseFloat(stringPrice)) ? true : parseFloat(stringPrice) < 0;
+    stringPrice += '';
+    x = stringPrice.split('.');
+    x1 = x[0];
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + '.' + '$2');
+    }
+
+    return withLabel ? `<span class="${isMinus ? 'text-danger' : ''}">${currency ? currency + ' ' : ''}${x1}</span>` : `${currency} ${x1}`;
+}
+
+function removeURLParamDatatable(parameter) {
+    var url = window.location.href;
+
+    var urlparts= url.split('?');
+    if (urlparts.length>=2) {
+
+        var prefix= encodeURIComponent(parameter)+'=';
+        var pars= urlparts[1].split(/[&;]/g);
+
+        //reverse iteration as may be destructive
+        for (var i= pars.length; i-- > 0;) {
+            //idiom for string.startsWith
+            if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                pars.splice(i, 1);
+            }
+        }
+
+        url = urlparts[0]+'?'+pars.join('&');
+    }
+
+    window.history.pushState({path: url}, '', url);
+}
+
+function insertUrlParamDatatable(key, value) {
+    if (history.pushState) {
+        let searchParams = new URLSearchParams(window.location.search);
+        searchParams.set(key, value);
+        let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+        window.history.pushState({path: newurl}, '', newurl);
+    }
+}
 
 $(document).ready(function () {
-	datatable = $('.datatable').each(function(datatableIndex){
-		var hasNewConfigSection = $(this).closest('.card').find('.card-header.card-header-config').length > 0;
-		var isAjax = $(this).data('use-ajax') == true;
-		var self = $(this);
-		dataTableOption = {
-			"order": [],
-			stateLoadParams: function(settings, data ) {
-				if (data.order) delete data.order;
-			},
-			"aLengthMenu": [
-				[5, 10, 15, -1],
-				[5, 10, 15, "All"]
-			],
-			"iDisplayLength": 10,
-			"language": {
-				search: ""
-			},
-			stateSave: true,
-			/*initComplete: function initComplete(settings, json) {
+    $('.datatable').each(function() {
+        let datatable = $(this);
+        let idDatatable = datatable.attr('id');
+        let isAjax = datatable.data('use-ajax');
+        let stateSave = datatable.data('state-save');
+        let option = {
+            responsive: true,
+            aaSorting: [],
+            stateSave: !!stateSave,
+        };
 
-				var tableSearchTagOpen = '<div class="card-header card-header-config "><div class="table-search">';
-				var tableSearchTagClose = '</div></div>';
-				var cardBodyElement = $(this).closest('.card').find('.card-body');
+        if (isAjax) {
+            option.processing = true;
+            option.serverSide = true;
+            option.searchDelay = 500;
+            option.ajax = {
+                type: 'post',
+                url: datatable.data('ajax-url'),
+                data: function (filters) {
+                    let additionalFilters = {};
+                    let filterElements = datatable.parents('body').find(`[data-table="${idDatatable}"]`);
+                    filterElements.each(function (i, el) {
+                        let filterName = $(el).attr('name');
+                        let filterValue = $(el).val();
+                        if (filterValue) {
+                            additionalFilters[filterName] = filterValue;
+                        }
 
-				if (isAjax && !hasNewConfigSection){
-					cardBodyElement.before( tableSearchTagOpen + '<label><input type="search" class="form-control input-sm" placeholder="Search..." aria-controls="DataTables_Table_0"></label>' + tableSearchTagClose);
-				} else if(!isAjax){
-					cardBodyElement.before( tableSearchTagOpen + tableSearchTagClose);
-					$('div.dataTables_filter input').attr('placeholder', 'Search...');
-				}
-				initAllElement();
+                        if (datatable.data('generate-url')) {
+                            if (Array.isArray(filterValue) || filterValue.length === 0 || !filterValue) {
+                                removeURLParamDatatable(filterName);
+                            } else {
+                                insertUrlParamDatatable(filterName, Array.isArray(filterValue) ? filterValue.join(',') : filterValue);
+                            }
+                        }
+                    });
 
-				$('.datatable').fadeIn('slow');
-				$(window).resize();
-				$('[tooltip]').each(function(){
-					if ($(this).attr('tooltip')) $(this).tooltip({title: $(this).attr('tooltip') });
-				});
-			},*/
-			fnDrawCallback: function (oSettings) {
-				initAllElement();
-				$(window).resize();
-			},
-			aaSorting: [],
-			searching: isAjax ? false : true
-		};
-		var theads = $(this).find('th')
-		if (isAjax){
-			var thisDatatableElement = $(this);
-			dataTableOption.processing = true;
-			dataTableOption.serverSide = true;
-			dataTableOption.ajax = {
-				url: $(this).data('ajax-url'),
-				type: 'POST',
-				dataSrc: function(data){
-					var datatableFormat = [];
-					$.each(data.data, function(index, row){
-						datatableFormat[index] = [];
-						$.each(theads, function(theadIndex, thead){
-							var name = $(thead).data('column-name');
-							if (name == undefined || name == '') datatableFormat[index].push('');
+                    return $.extend(filters, additionalFilters);
+                }
+            };
 
-							if (name == 'ALL')
-								datatableFormat[index].push(row);
-							else
-								datatableFormat[index].push(getValue(row, name));
-						})
-					})
-					return datatableFormat;
-				},
-			};
-			dataTableOption.ajax.data = function ( filter ) {
-				if (!filter) filter = {};
-				if (dataTableAction && dataTableAction != '') filter.datatableAction = dataTableAction;
-				if (typeof customFilter === "function") filter = customFilter(filter, datatableIndex);
-				if (filter.order){
-					filter.order.forEach(function(row){
-						if (row['column'] || row['column'] == 0){
-							var index = row['column'];
-							row['columnName'] = $(theads[index]).data('column-name');
-						}
-					});
-				}
-				filter.headers = {};
-				$.each(theads, function(theadIndex, thead){
-					var name = $(thead).data('column-name');
-					var excludeExport = $(thead).data('column-name');
-					if ((name != undefined || name != '') && $(thead).attr('exclude-export') != undefined) {
-						filter.headers[name] = $(thead).html();
-					}
-				});
-				if (filter.search == undefined) filter.search = {};
-				//filter.search.value = self.closest('.card').find('.table-search input').val();
-				return filter;
-			}
+            let columns = [];
+            datatable.find('thead tr th').each(function (i, el) {
+                let column = $(el);
 
-		}
-		if (typeof customColumns === "function") {
-			var myCustomColumns = customColumns(datatableIndex);
-			var columns = [];
-			$.each(theads, function(theadIndex, thead){
-				if (myCustomColumns[theadIndex] == undefined){
-					columns.push({ data: theadIndex, autoWidth: true });
-				} else {
-					columns.push({ data: theadIndex, autoWidth: true, render: function(data, type, row, meta){ return myCustomColumns[theadIndex](data, type, row, meta)}, class : "text-center",   });
-				}
-			});
-			dataTableOption.columns = columns;
-		}
-		var datatable = $(this).DataTable(dataTableOption).columns.adjust();
+                let render = null;
+                if (typeof customColumns === 'function') {
+                    let myCustomColumn = customColumns();
+                    if (myCustomColumn[i] !== 'undefined') {
+                        render = myCustomColumn[i];
+                    }
+                }
 
-		$(this).parents('.card').find('.ajax-filter').change(function() {
-			delay(function(){
-				datatable.ajax.reload();
-			}, 200 );
-		});
-		dataTableList.push(datatable);
-	});
-	initAllElement();
+                let title = column.html();
+                if (title.toLowerCase() === 'action') {
+                    columns.push({
+                        data: 'all',
+                        name: 'all',
+                        sortable: false,
+                        searchable: false,
+                        class: 'text-center',
+                        render: render ? render : function(data, type, row, meta) {
+                            let url = window.location.href.toString();
+                            let urlSplit = url.split('/');
+                            urlSplit[urlSplit.length-1] = `${pluralize.singular(urlSplit[urlSplit.length-1])}`;
+                            let idData = row && row.id ? row.id : 0;
 
-	initTableButtonExport('xlsx');
-	initTableButtonExport('csv');
+                            let html = `<div class="action-wrapper">`;
+                            html += `<a href="${urlSplit.join('/')}/${idData}" class="btn btn-outline-primary">View</a> `;
+                            html += `<button type="button" data-href="${urlSplit.join('/')}/delete/${idData}" class="btn btn-outline-danger btn-default-confirmation">Delete</button>`;
+                            html += `</div>`;
+                            return html;
+                        }
+                    });
 
+                    return;
+                }
+
+                let columnName = column.data('column-name');
+                let columnData = column.data('column-data');
+
+                let tempColumn = {
+                    data: columnData ? columnData : columnName,
+                    name: columnName
+                };
+
+                let customClass = column.data('column-class');
+                if (typeof customClass !== 'undefined') {
+                    tempColumn.className = customClass;
+                }
+
+                let sortable = column.data('column-sortable');
+                if (typeof sortable !== 'undefined') {
+                    tempColumn.sortable = sortable;
+                }
+
+                let searchable = column.data('column-searchable');
+                if (typeof searchable !== 'undefined') {
+                    tempColumn.searchable = searchable;
+                }
+
+                let dataType = column.data('type');
+                if (!render && typeof dataType !== 'undefined') {
+                    if (dataType.toLowerCase() === 'number') {
+                        render = function(data) {
+                            return convertNumber(data);
+                        };
+                    } else if (dataType.toLowerCase() === 'currency') {
+                        let abbr = column.data('abbr');
+                        let dangerMinusText = column.data('danger-minus');
+                        render = function(data) {
+                            return convertPrice(data, abbr, dangerMinusText ? dangerMinusText : false);
+                        };
+                    } else if (['date', 'datetime'].includes(dataType.toLowerCase())) {
+                        let format = column.data('format');
+                        if (!format) {
+                            if (dataType.toLowerCase() === 'date') {
+                                format = 'DD-MM-YYYY';
+                            } else if (dataType.toLowerCase() === 'datetime') {
+                                format = 'DD-MM-YYYY HH:mm:ss';
+                            }
+                        }
+
+                        render = function(data) {
+                            return convertDate(data, format);
+                        };
+                    }
+                }
+
+                if (render) {
+                    tempColumn.render = render;
+                }
+
+                columns.push(tempColumn);
+            });
+
+            option.columns = columns;
+        }
+
+        let initDatatable = $(this).DataTable(option);
+
+        if (isAjax) {
+            datatable.parents('body').find(`[data-table="${idDatatable}"]`).change(function() {
+                initDatatable.ajax.reload();
+            });
+        }
+    });
 });
-
-
-function initTableButtonExport(type) {
-	$('.table-setting.table-setting-' + type).click(function() {
-		dataTableAction = type;
-		var form = $('.table-setting-' + type+'-form').first();
-		form.attr('action', dataTableOption.ajax.url);
-		form.find('input[type=hidden]').remove();
-		$.each(dataTableOption.ajax.data(), function(key, value){
-			if (key == 'headers'){
-				form.append('<input type="hidden" name="'+key+'" value=\''+JSON.stringify(value)+'\'/>');
-			}
-			else if (Array.isArray(value)){
-				$.each(value, function(arrayKey, arrayValue){
-					form.append('<input type="hidden" name="'+key+'[]" value="'+arrayValue+'"/>');
-				});
-			} else{
-				form.append('<input type="hidden" name="'+key+'" value="'+value+'"/>');
-			}
-		});
-		form.submit();
-		dataTableAction = '';
-	});
-}

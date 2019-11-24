@@ -13,6 +13,8 @@
 @js(/assets/vodea/vodeacore/vendors/autonumeric/autoNumeric.min.js)
 
 @js(/assets/vodea/vodeacore/vendors/chartjs/Chart.bundle.min.js)
+
+@js(/assets/vodea/vodeacore/vendors/pluralize/pluralize.js)
 <!-- End plugin js for this page-->
 
 <!-- inject:js -->

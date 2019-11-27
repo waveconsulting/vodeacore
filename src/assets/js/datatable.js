@@ -118,7 +118,7 @@ $(document).ready(function () {
                 }
 
                 let title = column.html();
-                if (title.toLowerCase() === 'action') {
+                if (['action','actions'].include(title.toLowerCase())) {
                     columns.push({
                         data: 'all',
                         name: 'all',

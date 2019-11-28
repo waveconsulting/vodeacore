@@ -66,8 +66,8 @@ class VodeaShortPixel
 
     private function optimize($level = null)
     {
-        if (!$level) {
-            $level = 1;
+        if (empty($level)) {
+            $level = env('SHORT_PIXEL_COMPRESSION_LEVEL', 1);
         }
 
         return $this->file->optimize($level);

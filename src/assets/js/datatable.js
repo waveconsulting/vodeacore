@@ -9,7 +9,7 @@ function convertDate(stringDate, format) {
 function convertNumber(price, danger = '', abbr = null) {
     price = parseFloat(price);
     if (isNaN(price)) {
-        return 0;
+        price = 0;
     }
 
     let isDanger = false;

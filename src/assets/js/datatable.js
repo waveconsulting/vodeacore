@@ -6,29 +6,39 @@ function convertDate(stringDate, format) {
     return moment(stringDate).format(format);
 }
 
-function convertNumber(value) {
-    if (!value) {
+function convertNumber(price, danger = '', abbr = null) {
+    price = parseFloat(price);
+    if (isNaN(price)) {
         return 0;
     }
 
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
+    let isDanger = false;
+    if (price < 0) {
+        if (danger.toLowerCase() === 'danger') {
+            price = price * -1;
+        }
 
-function convertPrice(stringPrice, currency, withLabel = false) {
-    if (!stringPrice) {
-        stringPrice = '0';
+        isDanger = true;
     }
 
-    let isMinus = isNaN(parseFloat(stringPrice)) ? true : parseFloat(stringPrice) < 0;
-    stringPrice += '';
-    x = stringPrice.split('.');
-    x1 = x[0];
+    price += '';
+    let x = price.split('.');
+    let x1 = x[0];
     var rgx = /(\d+)(\d{3})/;
     while (rgx.test(x1)) {
         x1 = x1.replace(rgx, '$1' + '.' + '$2');
     }
 
-    return withLabel ? `<span class="${isMinus ? 'text-danger' : ''}">${currency ? currency + ' ' : ''}${x1}</span>` : `${currency} ${x1}`;
+    let html = '';
+    if (danger && isDanger) {
+        html += `<span class="text-danger">`;
+        html += danger.toLowerCase() === 'danger' ? `(${abbr ? abbr + ' ' : ''}${x1})` : `${abbr ? abbr + ' ' : ''}${x1}`;
+        html += `</span>`;
+    } else {
+        html = `${abbr ? abbr + ' ' : ''}${x1}`;
+    }
+
+    return html;
 }
 
 function removeURLParamDatatable(parameter) {
@@ -118,7 +128,7 @@ $(document).ready(function () {
                 }
 
                 let title = column.html();
-                if (['action','actions'].include(title.toLowerCase())) {
+                if (title.toLowerCase() === 'action') {
                     columns.push({
                         data: 'all',
                         name: 'all',
@@ -169,13 +179,10 @@ $(document).ready(function () {
                 if (!render && typeof dataType !== 'undefined') {
                     if (dataType.toLowerCase() === 'number') {
                         render = function(data) {
-                            return convertNumber(data);
-                        };
-                    } else if (dataType.toLowerCase() === 'currency') {
-                        let abbr = column.data('abbr');
-                        let dangerMinusText = column.data('danger-minus');
-                        render = function(data) {
-                            return convertPrice(data, abbr, dangerMinusText ? dangerMinusText : false);
+                            const dangerMinus = column.data('danger-minus');
+                            const danger = column.data('danger');
+
+                            return convertNumber(data, dangerMinus ? 'danger-minus' : (danger ? 'danger' : ''), column.data('abbr'));
                         };
                     } else if (['date', 'datetime'].includes(dataType.toLowerCase())) {
                         let format = column.data('format');

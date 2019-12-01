@@ -330,7 +330,9 @@ function initAllElement() {
 // default modal confirmation
 $(document).on('click', '.clickable-row', function(e) {
     'use strict';
-    window.location = $(this).data('href');
+    if ($(this).data('href')) {
+        window.location = $(this).data('href');
+    }
 });
 
 $(document).on('click','.btn-default-confirmation', function(e){

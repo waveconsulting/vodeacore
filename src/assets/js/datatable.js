@@ -85,6 +85,14 @@ $(document).ready(function () {
             stateSave: !!stateSave,
         };
 
+        let createdRowFunction = function( row, data, dataIndex ) {
+            $(row).addClass('clickable-row');
+        };
+
+        if (typeof createdRow === 'function') {
+            createdRowFunction = createdRow;
+        }
+
         if (isAjax) {
             option.processing = true;
             option.serverSide = true;
@@ -209,6 +217,8 @@ $(document).ready(function () {
 
             option.columns = columns;
         }
+
+        option.createdRow = createdRowFunction;
 
         let initDatatable = $(this).DataTable(option);
 

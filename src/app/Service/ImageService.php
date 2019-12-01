@@ -7,6 +7,7 @@ use Intervention\Image\ImageManager;
 use PhpParser\Node\Scalar\String_;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use ErrorException;
+use Vodea\VodeaCore\app\Util\VodeaShortPixel;
 
 
 class ImageService
@@ -113,8 +114,8 @@ class ImageService
 
 				if ($ratio == 0 && !is_string($uploadedFile) ){
 					File::copy($uploadedFilePath, $full_path);
-				}
-				else {
+
+				} else {
 					$image = $manager->make( $uploadedFile );
 					if ($ratio != 0){
 						$image->resize($ratio, null, function ($constraint) {
@@ -123,6 +124,11 @@ class ImageService
 					}
 					$image->save( $full_path );
 				}
+
+                if (!empty(env('SHORT_PIXEL_API_KEY', null))) {
+                    $shortPixel = new VodeaShortPixel();
+                    $shortPixel->fromFiles($full_path, $path);
+                }
 			}
 		} catch (\Exception $e){
 			\Log::error($e);

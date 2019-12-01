@@ -74,6 +74,19 @@ function insertUrlParamDatatable(key, value) {
 }
 
 $(document).ready(function () {
+    let url = window.location.href.toString();
+    let urlSplit = url.split('/');
+    let lastUrl = urlSplit[urlSplit.length-1];
+    let lastUrlSplit = lastUrl.split('?');
+
+    if (lastUrlSplit.length > 0) {
+        urlSplit[urlSplit.length-1] = `${pluralize.singular(lastUrlSplit[0])}`;
+    } else {
+        urlSplit[urlSplit.length-1] = `${pluralize.singular(urlSplit[urlSplit.length-1])}`;
+    }
+
+    url = urlSplit.join('/');
+
     $('.datatable').each(function() {
         let datatable = $(this);
         let idDatatable = datatable.attr('id');
@@ -85,8 +98,13 @@ $(document).ready(function () {
             stateSave: !!stateSave,
         };
 
-        let createdRowFunction = function( row, data, dataIndex ) {
+        let createdRowFunction = function( row, data) {
             $(row).addClass('clickable-row');
+
+            let idData = data && data.id ? data.id : 0;
+            if (idData) {
+                $(row).data('href', `${url}/${idData}`);
+            }
         };
 
         if (typeof createdRow === 'function') {
@@ -143,15 +161,16 @@ $(document).ready(function () {
                         sortable: false,
                         searchable: false,
                         class: 'text-center',
-                        render: render ? render : function(data, type, row, meta) {
-                            let url = window.location.href.toString();
-                            let urlSplit = url.split('/');
-                            urlSplit[urlSplit.length-1] = `${pluralize.singular(urlSplit[urlSplit.length-1])}`;
+                        render: render ? render : function(data, type, row) {
                             let idData = row && row.id ? row.id : 0;
 
                             let html = `<div class="action-wrapper">`;
-                            html += `<a href="${urlSplit.join('/')}/${idData}" class="btn btn-outline-primary">View</a> `;
-                            html += `<button type="button" data-href="${urlSplit.join('/')}/delete/${idData}" class="btn btn-outline-danger btn-default-confirmation">Delete</button>`;
+
+                            if(idData) {
+                                html += `<a href="${url}/${idData}" class="btn btn-outline-primary">View</a> `;
+                                html += `<button type="button" data-href="${url}/delete/${idData}" class="btn btn-outline-danger btn-default-confirmation">Delete</button>`;
+                            }
+
                             html += `</div>`;
                             return html;
                         }

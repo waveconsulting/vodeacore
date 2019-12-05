@@ -73,7 +73,7 @@ function insertUrlParamDatatable(key, value) {
     }
 }
 
-$(document).ready(function () {
+function getUrl(id = null, isDeleteUrl = false) {
     let url = window.location.href.toString();
     let urlSplit = url.split('/');
     let lastUrl = urlSplit[urlSplit.length-1];
@@ -85,12 +85,15 @@ $(document).ready(function () {
         urlSplit[urlSplit.length-1] = `${pluralize.singular(urlSplit[urlSplit.length-1])}`;
     }
 
-    url = urlSplit.join('/');
+    return urlSplit.join('/') + (isDeleteUrl ? '/delete/' : '') + (id ? '/' + id : '');
+}
 
+$(document).ready(function () {
     $('.datatable').each(function() {
         let datatable = $(this);
         let idDatatable = datatable.attr('id');
         let isAjax = datatable.data('use-ajax');
+        let isClickable = datatable.data('clickable');
         let stateSave = datatable.data('state-save');
         let option = {
             responsive: true,
@@ -98,17 +101,21 @@ $(document).ready(function () {
             stateSave: !!stateSave,
         };
 
-        let createdRowFunction = function( row, data) {
-            $(row).addClass('clickable-row');
+        if (isClickable) {
+            let createdRowFunction = function( row, data) {
+                $(row).addClass('clickable-row');
 
-            let idData = data && data.id ? data.id : 0;
-            if (idData) {
-                $(row).data('href', `${url}/${idData}`);
+                let idData = data.id || null;
+                if (idData) {
+                    $(row).data('href', getUrl(idData));
+                }
+            };
+
+            if (typeof createdRow === 'function') {
+                createdRowFunction = createdRow;
             }
-        };
 
-        if (typeof createdRow === 'function') {
-            createdRowFunction = createdRow;
+            option.createdRow = createdRowFunction;
         }
 
         if (isAjax) {
@@ -162,13 +169,13 @@ $(document).ready(function () {
                         searchable: false,
                         class: 'text-center',
                         render: render ? render : function(data, type, row) {
-                            let idData = row && row.id ? row.id : 0;
+                            let idData = row.id || null;
 
                             let html = `<div class="action-wrapper">`;
 
                             if(idData) {
-                                html += `<a href="${url}/${idData}" class="btn btn-outline-primary">View</a> `;
-                                html += `<button type="button" data-href="${url}/delete/${idData}" class="btn btn-outline-danger btn-default-confirmation">Delete</button>`;
+                                html += `<a href="${getUrl(idData)}" class="btn btn-outline-primary">View</a> `;
+                                html += `<button type="button" data-href="${getUrl(idData, true)}" class="btn btn-outline-danger btn-default-confirmation">Delete</button>`;
                             }
 
                             html += `</div>`;
@@ -236,8 +243,6 @@ $(document).ready(function () {
 
             option.columns = columns;
         }
-
-        option.createdRow = createdRowFunction;
 
         let initDatatable = $(this).DataTable(option);
 

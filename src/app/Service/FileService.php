@@ -15,11 +15,11 @@ class FileService{
         $extension = $uploadedFile->getClientOriginalExtension();
         $originalNameWithoutExt = substr($originalName, 0, strlen($originalName) - strlen($extension) - 1);
 
-	    if($originalName == 'blob'){
-		    $originalName = 'file.pdf';
-		    $extension = 'pdf';
-		    $originalNameWithoutExt = 'file';
-	    }
+        if($originalName == 'blob'){
+            $originalName = 'file.pdf';
+            $extension = 'pdf';
+            $originalNameWithoutExt = 'file';
+        }
 
         $filename = self::sanitize($originalNameWithoutExt);
         $allowed_filename = self::createUniqueFilename( $filename, $extension );
@@ -27,7 +27,7 @@ class FileService{
         $uploadSuccess = static::Save( $uploadedFile, $allowed_filename );
 
         if( !$uploadSuccess ) {
-           return false;
+            return false;
         }
 
         return $allowed_filename;
@@ -67,7 +67,7 @@ class FileService{
             }
 
             File::move($uploadedFile->path(), $full_path);
-	        chmod($full_path, 0777);
+            chmod($full_path, 0777);
 
             if (!empty(env('SHORT_PIXEL_API_KEY', null))) {
                 $shortPixel = new VodeaShortPixel();

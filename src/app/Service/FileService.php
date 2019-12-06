@@ -54,9 +54,12 @@ class FileService{
         return $filename . '.' . $extension;
     }
 
-    private static function Save( $uploadedFile, $allowed_filename ){
+    public static function Save( $uploadedFile, $allowed_filename, $path = null ){
         try{
-            $path = public_path(env('UPLOAD_FILE')) ;
+            if (empty($path)) {
+                $path = public_path(env('UPLOAD_FILE')) ;
+            }
+
             $full_path = $path . $allowed_filename;
 
             if(!File::exists($path)) {

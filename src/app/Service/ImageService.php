@@ -50,7 +50,31 @@ class ImageService
 		$filename = self::sanitize($originalNameWithoutExt);
 		$allowed_filename = self::createUniqueFilename( $filename, $extension );
 
-		$uploadSuccess = static::SaveAll( $uploadedFile, $allowed_filename );
+        $uploadSuccess = true;
+        $manager = new ImageManager();
+        foreach(self::$sizes as $size=>$ratio) {
+            $path = public_path(env('UPLOAD_IMAGE')) . $size . DIRECTORY_SEPARATOR;
+            $pathFull = public_path(env('UPLOAD_IMAGE')) . self::$sizes['full'] . DIRECTORY_SEPARATOR . $allowed_filename;
+
+            $full_path = $path . $allowed_filename;
+
+            if(!File::exists($path)) {
+                File::makeDirectory($path, 0777, true, true);
+            }
+
+            if ($ratio != 0){
+                $image = $manager->make( $pathFull );
+                $image->resize($ratio, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $image->save( $full_path );
+            } else {
+                $uploadSuccess = FileService::Save($uploadedFile, $allowed_filename, $path);
+                if (!$uploadSuccess) {
+                    break;
+                }
+            }
+        }
 
 		if( !$uploadSuccess ) {
 			return false;

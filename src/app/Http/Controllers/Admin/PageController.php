@@ -60,8 +60,7 @@ class PageController extends Controller {
             $model->save();
         }
 
-        $model = $class::SaveWithDataCMS($model);
-
+        $class::SaveWithDataCMS($model);
 
         $notification = NotificationService::DefaultNotification('success');
 

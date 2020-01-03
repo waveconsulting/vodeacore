@@ -10,8 +10,6 @@
         $cancelUrl = $model->getUrlIndex();
 
         $buttonSection = true;
-
-        $language = '';
     @endphp
 @endsection
 

@@ -10,6 +10,8 @@
 @css(/assets/vodea/vodeacore/vendors/ladda/css/ladda-themeless.min.css)
 
 @css(/assets/vodea/vodeacore/vendors/chartjs/Chart.min.css)
+
+@css(/assets/vodea/vodeacore/vendors/flag-icon/css/flag-icon.min.css)
 <!-- End plugin css for this page -->
 <!-- inject:css -->
 @css(/assets/vodea/vodeacore/css/master.css)

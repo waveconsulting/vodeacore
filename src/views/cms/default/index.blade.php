@@ -5,7 +5,9 @@
 @section('authorizeContent')
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Informational Pages</h4>
+            <div class="card-header">
+                <h4 class="card-title">Informational Pages</h4>
+            </div>
             <div class="row">
                 <div class="col-12">
                     <table class="table table-hover datatable">

@@ -146,14 +146,14 @@ class CRUDService {
     private static function updateData($json, $data, $formType, $formName, $model, $isList = false){
         $dataKey = array_keys($data);
         if (substr($formType,0,5) == 'Image') {
-            if (!$model::IS_CMS && !empty($json[$formName]) && is_string($json[$formName])) $json[$formName] = json_decode($json[$formName]);
+            $json[$formName] = [];
 
             $imageKeys = preg_grep('/'.$formName.'/', $dataKey);
             $updatedImage = [];
             foreach($imageKeys as $imageKey){
                 $imageIndex = substr($imageKey, strlen($formName), strlen($imageKey));
 
-                if (!isset($json[$formName])) $json[$formName] = [];
+                if (!isset($json[$formName]))
 
                 if (empty($data[$formName.$imageIndex])){
                     continue;

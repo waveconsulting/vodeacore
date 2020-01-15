@@ -10,6 +10,9 @@
         $cancelUrl = $model->getUrlIndex();
 
         $buttonSection = true;
+
+        $parentLanguage = getParentLanguage();
+        $language = getLanguageSession();
     @endphp
 @endsection
 

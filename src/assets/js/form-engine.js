@@ -237,6 +237,19 @@ function initAllElement() {
     }
     // End Select 2
 
+    $('[name="cmsLanguage"]').change(function () {
+        var ajaxData = {
+            cmsLanguage: $(this).val()
+        };
+
+        $.ajax({
+            method: 'POST',
+            url: saveSessionUrl,
+            data: ajaxData
+        }).done(function( response ) {
+            window.location.reload();
+        });
+    });
 
     // Timepicker
     if ($(".timepicker").length) {

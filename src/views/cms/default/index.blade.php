@@ -26,7 +26,7 @@
                                     <td>{{ $item->getValue($field, '', '') }}</td>
                                 @endforeach
                                 <td>
-                                    <a href="{!! route('admin.page-details', ['type' => get_class_short($item)]) !!}" class="btn btn-outline-primary">View</a>
+                                    <a href="{!! route('admin.page.details', ['type' => get_class_short($item)]) !!}" class="btn btn-outline-primary">View</a>
                                 </td>
                             </tr>
                         @endforeach

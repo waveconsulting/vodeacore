@@ -21,11 +21,11 @@ class CMS extends BaseEntity {
     const IS_CMS = true;
 
     public function getUrlIndex($extraParams = []){
-        return route('admin.pages');
+        return route('admin.page.list');
     }
 
     public function getUrlDetails($extraParams = []){
-        return route('admin.page-details.save', ['subtype' => $this::getClassName()]);
+        return route('admin.page.details', ['subtype' => $this::getClassName()]);
     }
 
     public function contents(){

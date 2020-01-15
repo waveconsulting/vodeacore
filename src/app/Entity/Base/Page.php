@@ -22,6 +22,10 @@ class Page extends CMS {
     ];
 
     public function getValue($key, $listItem, $language){
+        if (isset($this->$key)) {
+            return @$this->$key;
+        }
+
         return parent::getValue($key, $listItem, $language);
     }
 }

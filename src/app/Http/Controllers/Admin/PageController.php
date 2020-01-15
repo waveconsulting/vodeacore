@@ -65,6 +65,6 @@ class PageController extends Controller {
         $notification = NotificationService::DefaultNotification('success');
 
 
-        return redirect()->route('admin.pages')->with('notification', $notification);
+        return redirect()->route('admin.page.list')->with('notification', $notification);
     }
 }

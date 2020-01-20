@@ -119,7 +119,7 @@ $(document).ready(function () {
         }
 
         if (typeof drawCallback === 'function') {
-            option.drawCallback = drawCallback
+            option.drawCallback = drawCallback;
         }
 
         if (isAjax) {

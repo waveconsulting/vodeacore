@@ -118,6 +118,10 @@ $(document).ready(function () {
             option.createdRow = createdRowFunction;
         }
 
+        if (typeof drawCallback === 'function') {
+            option.drawCallback = drawCallback
+        }
+
         if (isAjax) {
             option.processing = true;
             option.serverSide = true;
@@ -147,10 +151,6 @@ $(document).ready(function () {
                     return $.extend(filters, additionalFilters);
                 }
             };
-
-            if (typeof drawCallback === 'function') {
-                option.drawCallback = drawCallback
-            }
 
             let columns = [];
             datatable.find('thead tr th').each(function (i, el) {

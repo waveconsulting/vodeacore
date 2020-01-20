@@ -148,6 +148,10 @@ $(document).ready(function () {
                 }
             };
 
+            if (typeof drawCallback === 'function') {
+                option.drawCallback = drawCallback
+            }
+
             let columns = [];
             datatable.find('thead tr th').each(function (i, el) {
                 let column = $(el);

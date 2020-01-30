@@ -47,7 +47,7 @@ class LangEntity extends BaseEntity {
                     return [@$model->$key];
             }
 
-            if (static::formType($key) == 'FastSelect'){
+            if (static::formType($key) == 'SelectMultiple'){
                 return @$model->$key->pluck('id')->toArray();
             }
             return @$model->$key;

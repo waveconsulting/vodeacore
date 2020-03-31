@@ -20,7 +20,9 @@
         $('button[type="submit"]').click(function () {
             var form = $(this).parents('form');
 
-            if ($(form).valid()) {
+            if (typeof form.attr('no-validator') != 'undefined') {
+
+            } else if ($(form).valid()) {
                 var btn = $(this).ladda();
                 btn.ladda('start');
                 form.submit();

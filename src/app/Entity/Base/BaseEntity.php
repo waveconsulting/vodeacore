@@ -184,7 +184,7 @@ class BaseEntity extends Authenticatable {
                 return @$this->$key->pluck('id')->toArray();
             }
             if (static::formType($key) == 'ListSortable'){
-                $list = json_decode(@$this->$key);
+                $list = @$this->$key;
 
                 if (isset($list)) {
                     foreach ($list as $idx => $items) {

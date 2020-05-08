@@ -50,9 +50,15 @@ class LangEntity extends BaseEntity {
             if (static::formType($key) == 'SelectMultiple'){
                 return @$model->$key->pluck('id')->toArray();
             }
+
+            if (substr(@$model->$key,0,1) == '[') return json_decode(@$model->$key);
+
             return @$model->$key;
+        } else {
+            if (substr(@$listItem->$key,0,1) == '[') return json_decode(@$listItem->$key);
+
+            return @$listItem->$key;
         }
-        else return @$listItem->$key;
     }
 
     public function getFrontendValue($key) {

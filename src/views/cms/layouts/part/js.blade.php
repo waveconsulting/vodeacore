@@ -1,36 +1,36 @@
 <!-- plugins:js -->
-@js(/assets/vodea/vodeacore/vendors/js/vendor.bundle.base.js)
-@js(/assets/vodea/vodeacore/vendors/js/vendor.bundle.addons.js)
+<script src="{{ asset('/assets/vodea/vodeacore/vendors/js/vendor.bundle.base.js') }}"></script>
+<script src="{{ asset('/assets/vodea/vodeacore/vendors/js/vendor.bundle.addons.js') }}"></script>
 <!-- endinject -->
 <!-- Plugin js for this page-->
-@js(/assets/vodea/vodeacore/vendors/tinymce/tinymce.min.js)
-@js(/assets/vodea/vodeacore/vendors/tinymce/themes/modern/theme.js)
+<script src="{{ asset('/assets/vodea/vodeacore/vendors/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ asset('/assets/vodea/vodeacore/vendors/tinymce/themes/modern/theme.js') }}"></script>
 
-@js(/assets/vodea/vodeacore/vendors/ladda/js/ladda.jquery.min.js)
-@js(/assets/vodea/vodeacore/vendors/ladda/js/spin.min.js)
-@js(/assets/vodea/vodeacore/vendors/ladda/js/ladda.min.js)
+<script src="{{ asset('/assets/vodea/vodeacore/vendors/ladda/js/ladda.jquery.min.js') }}"></script>
+<script src="{{ asset('/assets/vodea/vodeacore/vendors/ladda/js/spin.min.js') }}"></script>
+<script src="{{ asset('/assets/vodea/vodeacore/vendors/ladda/js/ladda.min.js') }}"></script>
 
-@js(/assets/vodea/vodeacore/vendors/autonumeric/autoNumeric.min.js)
+<script src="{{ asset('/assets/vodea/vodeacore/vendors/autonumeric/autoNumeric.min.js') }}"></script>
 
-@js(/assets/vodea/vodeacore/vendors/chartjs/Chart.bundle.min.js)
+<script src="{{ asset('/assets/vodea/vodeacore/vendors/chartjs/Chart.bundle.min.js') }}"></script>
 
-@js(/assets/vodea/vodeacore/vendors/pluralize/pluralize.js)
+<script src="{{ asset('/assets/vodea/vodeacore/vendors/pluralize/pluralize.js') }}"></script>
 <!-- End plugin js for this page-->
 
 <!-- inject:js -->
-@js(/assets/vodea/vodeacore/js/shared/off-canvas.js)
-@js(/assets/vodea/vodeacore/js/shared/hoverable-collapse.js)
-@js(/assets/vodea/vodeacore/js/shared/misc.js)
-@js(/assets/vodea/vodeacore/js/shared/settings.js)
-@js(/assets/vodea/vodeacore/js/shared/todolist.js)
+<script src="{{ asset('/assets/vodea/vodeacore/js/shared/off-canvas.js') }}"></script>
+<script src="{{ asset('/assets/vodea/vodeacore/js/shared/hoverable-collapse.js') }}"></script>
+<script src="{{ asset('/assets/vodea/vodeacore/js/shared/misc.js') }}"></script>
+<script src="{{ asset('/assets/vodea/vodeacore/js/shared/settings.js') }}"></script>
+<script src="{{ asset('/assets/vodea/vodeacore/js/shared/todolist.js') }}"></script>
 <!-- endinject -->
 <!-- Custom js for this page-->
-@js(/assets/vodea/vodeacore/js/dashboard.js)
+<script src="{{ asset('/assets/vodea/vodeacore/js/dashboard.js') }}"></script>
 
-@js(/assets/vodea/vodeacore/js/util.js)
-@js(/assets/vodea/vodeacore/js/form-engine.autocomplete.js)
-@js(/assets/vodea/vodeacore/js/form-engine.js)
-@js(/assets/vodea/vodeacore/js/datatable.js)
+<script src="{{ asset('/assets/vodea/vodeacore/js/util.js') }}"></script>
+<script src="{{ asset('/assets/vodea/vodeacore/js/form-engine.autocomplete.js') }}"></script>
+<script src="{{ asset('/assets/vodea/vodeacore/js/form-engine.js') }}"></script>
+<script src="{{ asset('/assets/vodea/vodeacore/js/datatable.js') }}"></script>
 <!-- End custom js for this page-->
 
 

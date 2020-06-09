@@ -111,7 +111,15 @@ function isActiveRoute($arrayRouteName){
 function getSettingByKey($key){
     $model = Setting::first();
 
-    return @$model->getFrontendValue($key);
+    if ($model) {
+        if ($model::USE_MULTI_LANG) {
+            return @$model->getFrontendValue($key);
+        }
+
+        return @$model->$key;
+    }
+
+    return false;
 }
 
 function getPermalink($name, $id) {

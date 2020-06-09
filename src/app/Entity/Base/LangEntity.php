@@ -80,6 +80,8 @@ class LangEntity extends BaseEntity {
             $selectedLangData = $this;
         }
 
+        if (substr(@$selectedLangData->$key,0,1) == '[') return json_decode(@$selectedLangData->$key);
+
         return $selectedLangData->$key;
     }
 

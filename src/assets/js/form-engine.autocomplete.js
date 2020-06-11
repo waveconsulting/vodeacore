@@ -30,7 +30,10 @@ function initAutoComplete(){
 
 		var options = {
 			ajax: {
-				url: url,
+				url: function () {
+					url = self.attr('data-url');
+					return url;
+				},
 				dataType: 'json',
 				data: function (params) {
 					var query = {

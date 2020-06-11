@@ -153,8 +153,6 @@ class CRUDService {
             foreach($imageKeys as $imageKey){
                 $imageIndex = substr($imageKey, strlen($formName), strlen($imageKey));
 
-                if (!isset($json[$formName]))
-
                 if (empty($data[$formName.$imageIndex])){
                     continue;
                 }

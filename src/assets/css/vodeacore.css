@@ -326,6 +326,46 @@ body {
 .datepicker.datepicker-dropdown .datepicker-days table.table-condensed tbody td.day.today:before, .datepicker.datepicker-inline .datepicker-days table.table-condensed tbody td.day.today:before {
   background: #2a72b3;
 }
+.datepicker.datepicker-dropdown .datepicker-days table.table-condensed tbody td.range-start, .datepicker.datepicker-inline .datepicker-days table.table-condensed tbody td.range-start {
+  position: relative;
+  color: white;
+  background: transparent;
+}
+.datepicker.datepicker-dropdown .datepicker-days table.table-condensed tbody td.range-start:before, .datepicker.datepicker-inline .datepicker-days table.table-condensed tbody td.range-start:before {
+  content: "";
+  width: 30px;
+  height: 30px;
+  background: #2196f3;
+  border-radius: 100%;
+  display: block;
+  margin: auto;
+  vertical-align: middle;
+  position: absolute;
+  top: 1px;
+  z-index: -1;
+  left: 0;
+  right: 0;
+}
+.datepicker.datepicker-dropdown .datepicker-days table.table-condensed tbody td.range-end, .datepicker.datepicker-inline .datepicker-days table.table-condensed tbody td.range-end {
+  position: relative;
+  color: white;
+  background: transparent;
+}
+.datepicker.datepicker-dropdown .datepicker-days table.table-condensed tbody td.range-end:before, .datepicker.datepicker-inline .datepicker-days table.table-condensed tbody td.range-end:before {
+  content: "";
+  width: 30px;
+  height: 30px;
+  background: #19d895;
+  border-radius: 100%;
+  display: block;
+  margin: auto;
+  vertical-align: middle;
+  position: absolute;
+  top: 1px;
+  z-index: -1;
+  left: 0;
+  right: 0;
+}
 .datepicker.input-group {
   width: 50%;
 }

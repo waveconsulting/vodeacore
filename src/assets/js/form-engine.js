@@ -285,6 +285,16 @@ function initAllElement() {
             format: "yyyy-mm-dd",
         });
     }
+
+    if ($('.input-daterange').length) {
+        $('.input-daterange').datepicker({
+            todayBtn: "linked",
+            enableOnReadonly: true,
+            todayHighlight: true,
+            toggleActive: true,
+            format: "yyyy-mm-dd",
+        });
+    }
     // End Datepicker
 
     // Image Upload

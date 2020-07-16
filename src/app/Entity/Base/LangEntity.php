@@ -51,11 +51,11 @@ class LangEntity extends BaseEntity {
                 return @$model->$key->pluck('id')->toArray();
             }
 
-            if (substr(@$model->$key,0,1) == '[') return json_decode(@$model->$key);
+            // if (substr(@$model->$key,0,1) == '[') return json_decode(@$model->$key);
 
             return @$model->$key;
         } else {
-            if (substr(@$listItem->$key,0,1) == '[') return json_decode(@$listItem->$key);
+            // if (substr(@$listItem->$key,0,1) == '[') return json_decode(@$listItem->$key);
 
             return @$listItem->$key;
         }

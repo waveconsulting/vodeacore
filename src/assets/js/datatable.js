@@ -85,7 +85,7 @@ function getUrl(id = null, isDeleteUrl = false) {
         urlSplit[urlSplit.length-1] = `${pluralize.singular(urlSplit[urlSplit.length-1])}`;
     }
 
-    return urlSplit.join('/') + (isDeleteUrl ? '/delete/' : '') + (id ? '/' + id : '');
+    return urlSplit.join('/') + (isDeleteUrl ? '/delete' : '') + (id ? '/' + id : '');
 }
 
 $(document).ready(function () {

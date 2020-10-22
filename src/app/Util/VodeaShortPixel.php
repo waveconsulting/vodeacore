@@ -21,6 +21,7 @@ class VodeaShortPixel
         }
 
         $path = str_replace('\\', '/', $path);
+        $url = str_replace('\\', '/', $url);
 
         $this->file = ShortPixel\fromUrls($url);
 

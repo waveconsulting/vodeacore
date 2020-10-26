@@ -14,6 +14,7 @@ class Assets {
             }
         });
     }
+
     public static function css(){
         \Blade::directive('css', function($expression) {
             $valid = \File::exists(public_path($expression));

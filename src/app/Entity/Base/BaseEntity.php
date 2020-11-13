@@ -46,6 +46,7 @@ class BaseEntity extends Authenticatable {
     const USE_MULTI_LANG = false;
     const USE_META_SET = false;
     const ALLOW_CREATE = true;
+    const ALLOW_UPDATE = true;
     const ALLOW_DELETE = true;
 
     const FORM_META_TYPE = [

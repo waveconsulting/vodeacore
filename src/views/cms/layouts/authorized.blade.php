@@ -143,9 +143,11 @@
             </div>
             <!-- content-wrapper ends -->
 
+            @if (!config('cms.withoutFooter', false))
             <!-- partial:footer -->
             @include('cms::layouts.part.footer')
             <!-- partial -->
+            @endif
         </div>
         <!-- main-panel ends -->
     </div>

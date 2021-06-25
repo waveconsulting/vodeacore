@@ -1,6 +1,6 @@
 <div class="image-selector-wrapper">
     @if(empty($model->isDisabled($key)))
-        <input type="file" class="btn-upload-file" @if(empty(@$image)) id="{{ $model->getFormName($key.$imageKey, $listName, $listIndex, $language) }}" name="{{ $model->getFormName($key.$imageKey, $listName, $listIndex, $language) }}" @endif label="{{ $model->label($key) }}" accept=".jpg,.jpeg,.png" {!! $model->getImageLimit($key) !!}/>
+        <input type="file" class="btn-upload-file" @if(empty(@$image)) id="{{ $model->getFormName($key.$imageKey, $listName, $listIndex, $language) }}" name="{{ $model->getFormName($key.$imageKey, $listName, $listIndex, $language) }}" @endif label="{{ $model->label($key) }}" accept=".jpg,.jpeg,.png,.webp" {!! $model->getImageLimit($key) !!}/>
     @endif
     @if(!empty(@$image))
         <input type="hidden" id="{{ $model->getFormName($key.$imageKey, $listName, $listIndex, $language) }}" name="{{ $model->getFormName($key.$imageKey, $listName, $listIndex, $language) }}" value="{{ @$image }}"/>
